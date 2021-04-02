@@ -18,4 +18,8 @@
     <PackageReference Include="SwashBuckle.Aspnetcore" Version="6.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Share\Share.csproj" />
+  </ItemGroup>
+
 </Project>
