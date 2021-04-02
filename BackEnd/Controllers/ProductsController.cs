@@ -12,8 +12,8 @@ namespace BackEnd.Controllers
     [Route("{controller}")]
     public class ProductsController : ControllerBase
     {
-        private readonly DataContext _dataContext;
-        public ProductsController(DataContext dataContext)
+        private readonly ApplicationDbContext _dataContext;
+        public ProductsController(ApplicationDbContext dataContext)
         {
             _dataContext = dataContext;
         }

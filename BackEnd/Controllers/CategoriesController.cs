@@ -10,8 +10,8 @@ namespace BackEnd.Controllers
 {
     public class CategoriesController : ControllerBase
     {
-        private readonly DataContext _dataContext;
-        public CategoriesController(DataContext dataContext)
+        private readonly ApplicationDbContext _dataContext;
+        public CategoriesController(ApplicationDbContext dataContext)
         {
             _dataContext = dataContext;
         }
