@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using BackEnd.Models;
+using BackEnd.IdentityServer;
 
 namespace BackEnd
 {
