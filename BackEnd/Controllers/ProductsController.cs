@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BackEnd.Data;
 using BackEnd.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Share;
@@ -9,7 +11,7 @@ using Share;
 namespace BackEnd.Controllers
 {
     [ApiController]
-    [Route("{controller}")]
+    [Route("api/[controller]")]
     public class ProductsController : ControllerBase
     {
         private readonly ApplicationDbContext _dataContext;
@@ -18,8 +20,9 @@ namespace BackEnd.Controllers
             _dataContext = dataContext;
         }
         [HttpGet]
-        public async Task<ActionResult<ProductVm>> GetProduct(){
-            var products = await _dataContext.Products.Select(x => new ProductVm{
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<ProductVm>>> GetProduct(){
+            return await  _dataContext.Products.Select(x => new ProductVm{
                 ProductID = x.ProductID,
                 ProductName = x.ProductName,
                 Description = x.Description,
@@ -27,11 +30,27 @@ namespace BackEnd.Controllers
                 CategoryID = x.CategoryID
             }).ToListAsync();
             
+            
+        }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ProductVm>> GetProduct(int id ){
+            var products = await _dataContext.Products.FindAsync(id);
+            if (products == null){
+                return NotFound();
+            }
+            var product = new ProductVm {
+                ProductID = products.ProductID,
+                ProductName = products.ProductName,
+                Price = products.Price,
+                Description = products.Description,
+                CategoryID = products.CategoryID
+            };
             return Ok(products);
         }
 
+
         [HttpPost]
-        public async Task<ActionResult> CreateProduct(ProductFormVm model){
+        public async Task<ActionResult<ProductVm>> CreateProduct(ProductFormVm model){
             var product = new Product {
                 ProductName = model.Name,
                 Description = model.Description,
@@ -40,7 +59,7 @@ namespace BackEnd.Controllers
             };
             _dataContext.Products.Add(product);
             await _dataContext.SaveChangesAsync();
-            return Accepted();
+            return CreatedAtAction("Get Product",new {id = product.ProductID}, new ProductVm{ProductID = product.ProductID,ProductName = product.ProductName});
         }
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateProduct(int id, ProductFormVm model){
@@ -53,7 +72,7 @@ namespace BackEnd.Controllers
             product.Price = model.Price;
             product.CategoryID = model.CategoryID;
             await _dataContext.SaveChangesAsync();
-            return Accepted();
+            return NotFound();
         }
         [HttpDelete("{id}")]
         public async Task <ActionResult> DeleteProduct(int id){
@@ -63,7 +82,7 @@ namespace BackEnd.Controllers
             }
             _dataContext.Products.Remove(product);
             await _dataContext.SaveChangesAsync();
-            return Accepted();
+            return NoContent();
             
         }
     }
