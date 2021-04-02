@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <UserSecretsId>aspnet-BackEnd-16246938-4C59-4D96-9BEC-6F12609AA483</UserSecretsId>
+    <UserSecretsId>aspnet-RookieShop.Backend-06FE2C48-3C75-4DC4-A67C-7D38A2B6F3AD</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

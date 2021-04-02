@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using BackEnd.Models;
 using BackEnd.IdentityServer;
+using Microsoft.AspNetCore.Identity;
 
 namespace BackEnd
 {
