@@ -15,7 +15,7 @@ namespace CustomerSite.Services
 
         public async Task<IList<ProductVm>> GetProducts(){
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:5001/products");
+            var response = await client.GetAsync("https://localhost:5001/api/products");
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadAsAsync<IList<ProductVm>>();
         }
