@@ -16,7 +16,7 @@ namespace CustomerSite.Services
 
         public async Task<IList<CategoryVm>> GetCategories(){
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:5001/categories");
+            var response = await client.GetAsync("https://localhost:5001/api/categories");
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadAsAsync<IList<CategoryVm>>();
         }

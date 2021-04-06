@@ -27,6 +27,13 @@ namespace CustomerSite.Controllers
             return View(products);  
         }
 
+        public async Task<IActionResult> Detail(int id){
+            var products = await _productApiClient.GetProductById(id);
+            return View(products);
+
+        }
+
+
         public IActionResult Privacy()
         {
             return View();

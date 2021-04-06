@@ -4,27 +4,29 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - CustomerSite</title>
-  <link rel="icon" href="images/fevicon/fevicon.png" type="image/gif" />
+  <link rel="icon" href="images/fevicon/fevicon.png" type="image/gif" asp-append-version=true/>
 <!-- bootstrap css -->
-        <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/bootstrap.min.css" asp-append-version=true/>
         <!-- Site css -->
-        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="~/css/style.css" asp-append-version=true/>
         <!-- responsive css -->
-        <link rel="stylesheet" href="css/responsive.css" />
+        <link rel="stylesheet" href="~/css/responsive.css" asp-append-version=true/>
         <!-- colors css -->
-        <link rel="stylesheet" href="css/colors1.css" />
+        <link rel="stylesheet" href="~/css/colors1.css" asp-append-version=true/>
         <!-- custom css -->
-        <link rel="stylesheet" href="css/custom.css" />
+        <link rel="stylesheet" href="~/css/custom.css" asp-append-version=true/>
         <!-- wow Animation css -->
-        <link rel="stylesheet" href="css/animate.css" />
+        <link rel="stylesheet" href="~/css/animate.css" asp-append-version=true/>
+
+        <link rel='stylesheet' href='~/css/hizoom.css' asp-append-version=true>
         <!-- revolution slider css -->
-        <link rel="stylesheet" type="text/css" href="revolution/css/settings.css" />
-        <link rel="stylesheet" type="text/css" href="revolution/css/layers.css" />
-        <link rel="stylesheet" type="text/css" href="revolution/css/navigation.css" />
+        <link rel="stylesheet" type="text/css" href="~/revolution/css/settings.css" asp-append-version=true/>
+        <link rel="stylesheet" type="text/css" href="~/revolution/css/layers.css" asp-append-version=true/>
+        <link rel="stylesheet" type="text/css" href="~/revolution/css/navigation.css" asp-append-version=true/>
 </head>
 <body id="default_theme" class="it_service">
 <!-- loader -->
-<div class="bg_load"> <img class="loader_animation" src="images/loaders/loader_1.png" alt="#" /> </div>
+<div class="bg_load"> <img class="loader_animation" src="~/images/loaders/loader_1.png" alt="#" /> </div>
 <!-- end loader -->
 <!-- header -->
 <header id="default_header" class="header_style_1">
@@ -209,26 +211,26 @@
   </div>
 </footer>
 
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script src="~/js/jquery.min.js"></script>
+<script src="~/js/bootstrap.min.js"></script>
 <!-- menu js -->
-<script src="js/menumaker.js"></script>
+<script src="~/js/menumaker.js"></script>
 <!-- wow animation -->
-<script src="js/wow.js"></script>
+<script src="~/js/wow.js"></script>
 <!-- custom js -->
-<script src="js/custom.js"></script>
+<script src="~/js/custom.js"></script>
 <!-- revolution js files -->
-<script src="revolution/js/jquery.themepunch.tools.min.js"></script>
-<script src="revolution/js/jquery.themepunch.revolution.min.js"></script>
-<script src="revolution/js/extensions/revolution.extension.actions.min.js"></script>
-<script src="revolution/js/extensions/revolution.extension.carousel.min.js"></script>
-<script src="revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
-<script src="revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
-<script src="revolution/js/extensions/revolution.extension.migration.min.js"></script>
-<script src="revolution/js/extensions/revolution.extension.navigation.min.js"></script>
-<script src="revolution/js/extensions/revolution.extension.parallax.min.js"></script>
-<script src="revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
-<script src="revolution/js/extensions/revolution.extension.video.min.js"></script>
+<script src="~/revolution/js/jquery.themepunch.tools.min.js"></script>
+<script src="~/revolution/js/jquery.themepunch.revolution.min.js"></script>
+<script src="~/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+<script src="~/revolution/js/extensions/revolution.extension.carousel.min.js"></script>
+<script src="~/revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
+<script src="~/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+<script src="~/revolution/js/extensions/revolution.extension.migration.min.js"></script>
+<script src="~/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+<script src="~/revolution/js/extensions/revolution.extension.parallax.min.js"></script>
+<script src="~/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+<script src="~/revolution/js/extensions/revolution.extension.video.min.js"></script>
 <!-- map js -->
 <script>
          // This example adds a marker to indicate the position of Bondi Beach in Sydney,
@@ -335,6 +337,18 @@
            });
          }
       </script>
+
+      <script src='~/js/hizoom.js'></script>
+<script>
+        $('.hi1').hiZoom({
+            width: 300,
+            position: 'right'
+        });
+        $('.hi2').hiZoom({
+            width: 400,
+            position: 'right'
+        });
+    </script>
 <!-- google map js -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8eaHt9Dh5H57Zh0xVTqxVdBFCvFMqFjQ&callback=initMap"></script>
 
