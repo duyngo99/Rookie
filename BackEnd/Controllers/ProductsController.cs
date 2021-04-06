@@ -26,13 +26,16 @@ namespace BackEnd.Controllers
                 ProductID = x.ProductID,
                 ProductName = x.ProductName,
                 Description = x.Description,
-                Price = x.Price,
-                CategoryID = x.CategoryID
+                Price=x.Price,
+                CategoryID = x.CategoryID,
+                Image = x.ProductImage
+                
             }).ToListAsync();
             
             
         }
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<ProductVm>> GetProduct(int id ){
             var products = await _dataContext.Products.FindAsync(id);
             if (products == null){
@@ -45,13 +48,14 @@ namespace BackEnd.Controllers
                 Description = products.Description,
                 CategoryID = products.CategoryID
             };
-            return Ok(products);
+            return product;
         }
 
 
         [HttpPost]
         public async Task<ActionResult<ProductVm>> CreateProduct(ProductFormVm model){
             var product = new Product {
+                
                 ProductName = model.Name,
                 Description = model.Description,
                 Price = model.Price,

@@ -1,13 +1,17 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BackEnd.Data;
 using BackEnd.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Share;
 
 namespace BackEnd.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class CategoriesController : ControllerBase
     {
         private readonly ApplicationDbContext _dataContext;
@@ -16,22 +20,37 @@ namespace BackEnd.Controllers
             _dataContext = dataContext;
         }
         [HttpGet]
-        public async Task<ActionResult<CategoryVm>> GetCategory(){
-            var categories = await _dataContext.Categories.Select(x => new CategoryVm{
-                Name = x.CategoryName
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<CategoryVm>>> GetCategory(){
+            return await  _dataContext.Categories.Select(x => new CategoryVm{
+                Name = x.CategoryName,
+                CategoryID = x.CategoryID
             }).ToListAsync();
-
-            return Ok(categories);
+            
+            
         }
-
+        [HttpGet("{id}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<CategoryVm>> GetCategory(int id ){
+            var categories = await _dataContext.Categories.FindAsync(id);
+            if (categories == null){
+                return NotFound();
+            }
+            var category = new CategoryVm {
+                CategoryID = categories.CategoryID,
+                Name = categories.CategoryName
+            };
+            return category;
+        }
+        
         [HttpPost]
-        public async Task<ActionResult> CreateCategory(CategoryFormVm model){
+        public async Task<ActionResult<CategoryVm>> CreateCategory(CategoryFormVm model){
             var category = new Category {
                 CategoryName = model.Name
             };
             _dataContext.Categories.Add(category);
             await _dataContext.SaveChangesAsync();
-            return Accepted();
+            return CreatedAtAction("Get Product",new {id = category.CategoryID}, new CategoryVm{CategoryID = category.CategoryID,Name = category.CategoryName });
         }
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateCategory(int id, CategoryFormVm model){
@@ -41,7 +60,7 @@ namespace BackEnd.Controllers
             }
             category.CategoryName = model.Name;
             await _dataContext.SaveChangesAsync();
-            return Accepted();
+            return NotFound();
         }
         [HttpDelete("{id}")]
         public async Task <ActionResult> DeleteCategory(int id){
@@ -51,7 +70,7 @@ namespace BackEnd.Controllers
             }
             _dataContext.Categories.Remove(category);
             await _dataContext.SaveChangesAsync();
-            return Accepted();
+            return NoContent();
             
         }
     }

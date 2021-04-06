@@ -10,7 +10,7 @@ namespace CustomerSite.Services
         private readonly IHttpClientFactory _httpClientFactory;
         public ProductApiClient(IHttpClientFactory httpClientFactory)
         {
-            
+            _httpClientFactory = httpClientFactory;
         }
 
         public async Task<IList<ProductVm>> GetProducts(){

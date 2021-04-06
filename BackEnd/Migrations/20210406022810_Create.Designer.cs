@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackEnd.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210402073101_Create")]
+    [Migration("20210406022810_Create")]
     partial class Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,6 +51,9 @@ namespace BackEnd.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<byte[]>("ProductImage")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("ProductName")
                         .HasColumnType("nvarchar(max)");
