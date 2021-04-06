@@ -46,7 +46,9 @@ namespace BackEnd.Controllers
                 ProductName = products.ProductName,
                 Price = products.Price,
                 Description = products.Description,
-                CategoryID = products.CategoryID
+                CategoryID = products.CategoryID,
+                Image = products.ProductImage
+                
             };
             return product;
         }
