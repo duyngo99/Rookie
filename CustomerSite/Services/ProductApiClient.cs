@@ -27,14 +27,14 @@ namespace CustomerSite.Services
             return await response.Content.ReadAsAsync<ProductVm>();
         }
 
-        // public async Task<IEnumerable<ProductVm>> GetProductByCate(int id){
-        //     var client = _httpClientFactory.CreateClient();
-        //     var response = await client.GetAsync("https://localhost:5001/api/products");
-        //     response.EnsureSuccessStatusCode();
-        //     IList<ProductVm> productbyCate = await response.Content.ReadAsAsync<IList<ProductVm>>();
-        //     return productbyCate.Where(x => x.ProductID == id);
+        public async Task<IEnumerable<ProductVm>> GetProductByCate(int id){
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.GetAsync("https://localhost:5001/api/products");
+            response.EnsureSuccessStatusCode();
+            IList<ProductVm> productByCate = await response.Content.ReadAsAsync<IList<ProductVm>>();
+            return productByCate.Where(x => x.CategoryID == id);
             
-        // }
+        }
 
     }
 }

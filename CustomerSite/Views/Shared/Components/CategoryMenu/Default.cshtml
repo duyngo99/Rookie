@@ -1,0 +1,7 @@
+@model IList<Share.CategoryVm>
+
+
+    @foreach (var item in Model)
+    {
+       <li><a asp-controller="Home" asp-action="CategoryList" asp-route-id="@item.CategoryID">@item.Name</a></li>
+    }

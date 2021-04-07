@@ -70,7 +70,7 @@
       <div class="row">
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
           <!-- logo start -->
-          <div class="logo"> <a href="it_home.html"><img src="~/images/logos/it_logo.png" alt="logo" /></a> </div>
+          <div class="logo"> <a asp-action="Index" asp-controller="Home"><img src="~/images/logos/it_logo.png" alt="logo" /></a> </div>
           <!-- logo end -->
         </div>
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
@@ -85,11 +85,11 @@
                   </ul>
                 </li>
                 <li><a href="it_about.html">About Us</a></li>
-                <li> <a href="it_service.html">Service</a>
-                  <ul>
-                    <li><a href="it_service_list.html">Services list</a></li>
-                    <li><a href="it_service_detail.html">Services Detail</a></li>
-                  </ul>
+                <li> <a href="#">Category</a>
+                <ul>
+                  @await Component.InvokeAsync("CategoryMenu")
+                </ul>
+                  
                 </li>
                 <li> <a href="it_blog.html">Blog</a>
                   <ul>

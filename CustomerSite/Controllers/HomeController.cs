@@ -33,6 +33,11 @@ namespace CustomerSite.Controllers
 
         }
 
+        public async Task<ActionResult> CategoryList(int id){
+            var products = await _productApiClient.GetProductByCate(id);
+            return View(products);
+        }
+
 
         public IActionResult Privacy()
         {
