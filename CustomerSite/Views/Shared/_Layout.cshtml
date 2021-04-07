@@ -89,7 +89,7 @@
                 <ul>
                   @await Component.InvokeAsync("CategoryMenu")
                 </ul>
-                  
+                
                 </li>
                 <li> <a href="it_blog.html">Blog</a>
                   <ul>
@@ -123,17 +123,26 @@
                 </li>
               </ul>
             </div>
-            <div class="search_icon">
-              <ul>
-                <li><a href="#" data-toggle="modal" data-target="#search_bar"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-              </ul>
-            </div>
-          </div>
+             
+           
+              
+                @using (Html.BeginForm("Search","Home")){
+                    <div class="side_bar_search"> 
+                    <div class="input-group stylish-input-group">
+                    <input class="form-control" placeholder="Search" type="text" name="name">
+                    <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </div>
+                    </div>
+                }
+               
+    </div>
+</div>       
           <!-- menu end -->
         </div>
       </div>
     </div>
   </div>
+
   <!-- header bottom end -->
 </header>
 <!-- end header -->

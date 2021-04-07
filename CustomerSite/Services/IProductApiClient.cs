@@ -11,5 +11,7 @@ namespace CustomerSite.Services
          Task<ProductVm> GetProductById(int id);
 
          Task<IEnumerable<ProductVm>> GetProductByCate(int id);
+
+         Task<IEnumerable<ProductVm>> GetProductByName(string name);
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CustomerSite.Models;
 using CustomerSite.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace CustomerSite.Controllers
 {
@@ -33,8 +34,12 @@ namespace CustomerSite.Controllers
 
         }
 
-        public async Task<ActionResult> CategoryList(int id){
+        public async Task<IActionResult> CategoryList(int id){
             var products = await _productApiClient.GetProductByCate(id);
+            return View(products);
+        }
+        public async Task<IActionResult> Search(IFormCollection form){
+            var products = await _productApiClient.GetProductByName(form["name"].ToString());
             return View(products);
         }
 

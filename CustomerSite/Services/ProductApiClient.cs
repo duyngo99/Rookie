@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -33,6 +34,15 @@ namespace CustomerSite.Services
             response.EnsureSuccessStatusCode();
             IList<ProductVm> productByCate = await response.Content.ReadAsAsync<IList<ProductVm>>();
             return productByCate.Where(x => x.CategoryID == id);
+            
+        }
+
+        public async Task<IEnumerable<ProductVm>> GetProductByName(string name){
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.GetAsync("https://localhost:5001/api/products");
+            response.EnsureSuccessStatusCode();
+            IList<ProductVm> productByName = await response.Content.ReadAsAsync<IList<ProductVm>>();
+            return productByName.Where(x => x.ProductName.StartsWith(name, StringComparison.OrdinalIgnoreCase));
             
         }
 
