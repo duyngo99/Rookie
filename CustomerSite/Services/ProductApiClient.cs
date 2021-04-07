@@ -28,6 +28,17 @@ namespace CustomerSite.Services
             return await response.Content.ReadAsAsync<ProductVm>();
         }
 
+         public async Task<IEnumerable<ProductVm>> GetCateByProduct(int id){
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.GetAsync("https://localhost:5001/api/products");
+            var pro = await client.GetAsync("https://localhost:5001/api/products/"+id);
+            response.EnsureSuccessStatusCode();
+            pro.EnsureSuccessStatusCode();
+            IList<ProductVm> products = await response.Content.ReadAsAsync<IList<ProductVm>>();
+            ProductVm product= await pro.Content.ReadAsAsync<ProductVm>();
+            return products.Where(x => x.CategoryID == product.CategoryID);
+            
+        }
         public async Task<IEnumerable<ProductVm>> GetProductByCate(int id){
             var client = _httpClientFactory.CreateClient();
             var response = await client.GetAsync("https://localhost:5001/api/products");
@@ -45,6 +56,8 @@ namespace CustomerSite.Services
             return productByName.Where(x => x.ProductName.StartsWith(name, StringComparison.OrdinalIgnoreCase));
             
         }
+
+        
 
     }
 }
