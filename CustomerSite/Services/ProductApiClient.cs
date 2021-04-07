@@ -36,7 +36,7 @@ namespace CustomerSite.Services
             pro.EnsureSuccessStatusCode();
             IList<ProductVm> products = await response.Content.ReadAsAsync<IList<ProductVm>>();
             ProductVm product= await pro.Content.ReadAsAsync<ProductVm>();
-            return products.Where(x => x.CategoryID == product.CategoryID);
+            return products.Where(x => x.CategoryID == product.CategoryID && x.ProductID!=product.ProductID);
             
         }
         public async Task<IEnumerable<ProductVm>> GetProductByCate(int id){
