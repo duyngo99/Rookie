@@ -1,5 +1,7 @@
+using System.Linq;
 using System.Threading.Tasks;
 using BackEnd.Data;
+using BackEnd.Models;
 using BackEnd.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -11,10 +13,14 @@ namespace BackEnd.Controllers
     {
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly ApplicationDbContext _applicationDbContext;
-        public RoleManagerController(ApplicationDbContext applicationDbContext, RoleManager<IdentityRole> roleManager)
+
+        private readonly UserManager<User> userManager;
+        public RoleManagerController(ApplicationDbContext applicationDbContext, RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
         {
             _applicationDbContext = applicationDbContext;
             this.roleManager = roleManager;
+            this.userManager = userManager;
+
         }
 
 
@@ -70,5 +76,60 @@ namespace BackEnd.Controllers
             }
             
         }
+        [HttpGet]
+        public IActionResult ListUsers()
+        {
+            var users = userManager.Users;
+            return View(users);
+        }
+        [HttpGet]
+        public async Task<IActionResult> EditUser(string id) {
+            var user = await userManager.FindByIdAsync(id);
+            if (user == null) {
+                ViewBag.ErrorMessage = $"User with ID  = {id} cannot be found";
+                return View("NotFound");
+            }
+
+            var userClaims = await userManager.GetClaimsAsync(user);
+
+            var userRoles = await userManager.GetRolesAsync(user);
+
+            var model = new EditUserViewModel {
+                ID = user.Id,
+                Email = user.Email,
+                FullName = user.FullName,
+                UserName = user.UserName,
+
+                Claims = userClaims.Select( c => c.Value).ToList(),
+                Roles = userRoles
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUser(EditUserViewModel model){
+            var user = await userManager.FindByIdAsync(model.ID);
+            if (user == null) {
+                ViewBag.ErrorMessage = $"User with ID = {model.ID} can not be found";
+            }
+            else
+            {
+                user.Email = model.Email;
+                user.FullName = model.FullName;
+                user.UserName = model.UserName;
+                
+            }
+            var result = await userManager.UpdateAsync(user);
+
+            if (result.Succeeded) {
+                return RedirectToAction("ListUsers");
+            }
+            
+            foreach(var error in result.Errors) {
+                ModelState.AddModelError("",error.Description);
+            }
+            return View(model);
+        }
+
     }
 }
