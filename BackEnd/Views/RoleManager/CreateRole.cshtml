@@ -1,0 +1,14 @@
+@model BackEnd.ViewModel.CreateRoleViewModel
+
+<form asp-action="CreateRole" method="POST">
+    <div class="form-group row" >
+        <lable asp-for="RoleName"></lable>
+        <div class="col-sm-10">
+            <input asp-for="RoleName" placeholder="Role Name">
+        </div>
+    </div>
+    <div class="form-group row" >
+        
+        <button type="submit" class="btn btn-primary">Add role</button>
+    </div>
+</form>
