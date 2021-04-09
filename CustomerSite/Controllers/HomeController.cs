@@ -9,6 +9,7 @@ using CustomerSite.Models;
 using CustomerSite.Services;
 using Microsoft.AspNetCore.Http;
 
+
 namespace CustomerSite.Controllers
 {
     public class HomeController : Controller
@@ -16,12 +17,15 @@ namespace CustomerSite.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IProductApiClient _productApiClient;
 
-        public HomeController(ILogger<HomeController> logger,IProductApiClient productApiClient)
+        private readonly IRatingApiClient _ratingApiClient;
+
+        public HomeController(ILogger<HomeController> logger,IProductApiClient productApiClient,IRatingApiClient ratingApiClient)
         {
             _logger = logger;
             _productApiClient = productApiClient;
+            _ratingApiClient = ratingApiClient;          
         }
-
+        
         public async Task<IActionResult> Index()
         {
             var products = await _productApiClient.GetProducts();
@@ -41,6 +45,18 @@ namespace CustomerSite.Controllers
         public async Task<IActionResult> Search(IFormCollection form){
             var products = await _productApiClient.GetProductByName(form["name"].ToString());
             return View(products);
+        }
+
+        public async Task<IActionResult> Rating(IFormCollection form) {
+            int proId=int.Parse(form["proId"]);
+            string userName=form["userName"].ToString();
+            int rate=int.Parse(form["rate"]);
+            if(await _ratingApiClient.SearchRating(proId,userName ) != null) {
+                  _ratingApiClient.RemoveRating(proId,userName);
+            }                          
+            await _ratingApiClient.PostRatingByID(proId,userName,rate);
+            
+            return RedirectToAction("Index","Home");
         }
 
 
