@@ -43,7 +43,7 @@ namespace CustomerSite.Services
 
 
         public async Task RemoveRating(int ProId,string UserName){
-             RatingVm ratingVms= await SearchRating(ProId,UserName);
+            RatingVm ratingVms= await SearchRating(ProId,UserName);
             var client = new HttpClient();
             await client.DeleteAsync("https://localhost:5001/api/ratings/"+ratingVms.Id);
              
