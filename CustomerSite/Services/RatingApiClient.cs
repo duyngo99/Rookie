@@ -27,7 +27,7 @@ namespace CustomerSite.Services
 
         }
 
-        public async Task PostRatingByID(int ProId,string UserName,int RatingText){
+        public async Task PostRatingByID(int ProId,string UserName,double RatingText){
             var client = new HttpClient();
             RatingVm jsonInString= new RatingVm{ProductID=ProId,UserName=UserName,RatingText=RatingText};
             await client.PostAsync("https://localhost:5001/api/ratings", new StringContent(JsonConvert.SerializeObject(jsonInString), Encoding.UTF8, "application/json"));
@@ -50,8 +50,22 @@ namespace CustomerSite.Services
              
         }
 
-
-
+        public async Task<double> FindRatingByProduct(int ProId){
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.GetAsync("https://localhost:5001/api/ratings");
+            response.EnsureSuccessStatusCode();
+            IList<RatingVm> ratingVms = await response.Content.ReadAsAsync<IList<RatingVm>>();
+            var ratings=ratingVms.Where(x => x.ProductID == ProId );
+            double average = 0;
+            double tong=0;
+            int count = 0;
+            foreach(var item in ratings) {
+                count++;
+                tong+=item.RatingText;  
+            }
+            average=tong/count;
+            return average;
+        }
 
 
 

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackEnd.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210409041511_Create")]
+    [Migration("20210409072839_Create")]
     partial class Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,6 +58,9 @@ namespace BackEnd.Migrations
                     b.Property<string>("ProductName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("RatingAverage")
+                        .HasColumnType("float");
+
                     b.HasKey("ProductID");
 
                     b.HasIndex("CategoryID");
@@ -75,8 +78,8 @@ namespace BackEnd.Migrations
                     b.Property<int>("ProductID")
                         .HasColumnType("int");
 
-                    b.Property<int>("RatingText")
-                        .HasColumnType("int");
+                    b.Property<double>("RatingText")
+                        .HasColumnType("float");
 
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");

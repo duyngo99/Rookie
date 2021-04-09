@@ -89,10 +89,6 @@
                 <ul>
                   @await Component.InvokeAsync("CategoryMenu")
                 </ul>
-                
-                </li>
-                  @Html.Partial("_LoginPartial")
-                
                 <li> <a href="it_contact.html">Search</a>
                   <ul>
                       @using (Html.BeginForm("Search","Home")){
@@ -105,14 +101,13 @@
                     }  
                   </ul>
                 </li>   
+                </li>
+                  @Html.Partial("_LoginPartial")
               </ul>
-              
-            </div>   
-                  
+            </div>                
     </div>
-  
 </div>       
-          <!-- menu end -->
+ <!-- menu end -->
         </div>
       </div>
     </div>

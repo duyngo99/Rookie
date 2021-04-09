@@ -23,16 +23,19 @@
             <div class="product-heading">
               <h2>@Model.ProductName</h2>
             </div>
-            <div class="product-detail-side"> <span class="new-price">@Model.Price</span> <span class="rating"> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i> </span> <span class="review">(5 customer review)</span> </div>
-            <div class="detail-contant">
-              <p>@Model.Description<br>
+            <div class="product-detail-side"> <span class="new-price">@Model.Price $</span></div>
+           
+                <div class="detail-contant">
+              <p>@Model.Description<br> <p> Our product has <b> @Model.RatingAVG / 5</b> ratings </p>
               <form class="cart" method="post" action="it_cart.html">
                 <div class="quantity">
-                  <input step="1" min="1" max="100" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" type="number">
+                  <input step="1" min="1" max="5" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" type="number">
+                  
                 </div>
                 <button type="submit" class="btn sqaure_bt">Add to cart</button>
               </form>
-            </div>
+              </div>
+
             <div class="share-post"> <a href="#" class="share-text">Share</a>
               <ul class="social_icons">
                 <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
@@ -42,6 +45,21 @@
                 <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
               </ul>
             </div>
+            <br>
+            <hr>
+            <div>
+              @if(User.Identity.IsAuthenticated){
+               using(Html.BeginForm("Rating","Home")) {
+              <input type="number" min="1" max="5" step="0.5" class="form-control" name="rate" placeholder="Rate our product" aria-label="Recipient's username" aria-describedby="button-addon2">
+              <div class="input-group-append">
+                <input type="hidden" name="proId"  value="@Model.ProductID">
+                  <input type="hidden" name="userName" value="@User.Identity.Name">
+                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Rate</button>
+              </div>
+              }
+            }
+            </div>
+
           </div>
         </div>
         <div class="row">
@@ -127,7 +145,7 @@
           </div>
         </div>
         <div class="row">
-            @await Component.InvokeAsync("ProductRelativeMenu",Model.ProductID)
+           @await Component.InvokeAsync("ProductRelativeMenu",Model.ProductID)
         </div>
       </div>
       <div class="col-md-3">
@@ -186,19 +204,6 @@
     </div>
   </div>
 </div>
-@using(Html.BeginForm("Rating","Home"))
-{
-    <div class="form-group row">
-    <input type="hidden" name="proId" value=@Model.ProductID>
-    <input type="hidden" name="userName" value="@User.Identity.Name">
-    <input type="text" name="rate">
-  </div>
-  <div class="form-group row">
-    <button type="submit" >submit</button>
-  </div>
-}
-  
-
 <!-- end section -->
 <!-- section -->
 <div class="section padding_layout_1 testmonial_section white_fonts">
@@ -299,6 +304,31 @@
             <li><img src="images/it_service/brand_icon4.png" alt="#" /></li>
             <li><img src="images/it_service/brand_icon5.png" alt="#" /></li>
           </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end section -->
+<!-- Modal -->
+<div class="modal fade" id="search_bar" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="fa fa-close"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-8 col-md-8 col-sm-8 offset-lg-2 offset-md-2 offset-sm-2 col-xs-10 col-xs-offset-1">
+            <div class="navbar-search">
+              <form action="#" method="get" id="search-global-form" class="search-global">
+                <input type="text" placeholder="Type to search" autocomplete="off" name="s" id="search" value="" class="search-global__input">
+                <button class="search-global__btn"><i class="fa fa-search"></i></button>
+                <div class="search-global__note">Begin typing your search above and press return to search.</div>
+              </form> 
+            </div>
+          </div>
         </div>
       </div>
     </div>

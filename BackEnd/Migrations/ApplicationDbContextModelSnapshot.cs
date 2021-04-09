@@ -56,6 +56,9 @@ namespace BackEnd.Migrations
                     b.Property<string>("ProductName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("RatingAverage")
+                        .HasColumnType("float");
+
                     b.HasKey("ProductID");
 
                     b.HasIndex("CategoryID");
@@ -73,8 +76,8 @@ namespace BackEnd.Migrations
                     b.Property<int>("ProductID")
                         .HasColumnType("int");
 
-                    b.Property<int>("RatingText")
-                        .HasColumnType("int");
+                    b.Property<double>("RatingText")
+                        .HasColumnType("float");
 
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");

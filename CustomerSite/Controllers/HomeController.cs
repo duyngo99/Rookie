@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 using CustomerSite.Models;
 using CustomerSite.Services;
 using Microsoft.AspNetCore.Http;
-
+using Share;
 
 namespace CustomerSite.Controllers
 {
@@ -32,7 +32,9 @@ namespace CustomerSite.Controllers
             return View(products);  
         }
 
-        public async Task<IActionResult> Detail(int id){
+        public async Task<IActionResult> Detail(int id){    
+            ProductFormVm productFormVm = new ProductFormVm();
+            await _productApiClient.PuttRatingProduct(id,productFormVm);
             var products = await _productApiClient.GetProductById(id);
             return View(products);
 
@@ -46,7 +48,7 @@ namespace CustomerSite.Controllers
             var products = await _productApiClient.GetProductByName(form["name"].ToString());
             return View(products);
         }
-
+        
         public async Task<IActionResult> Rating(IFormCollection form) {
             int proId=int.Parse(form["proId"]);
             string userName=form["userName"].ToString();
