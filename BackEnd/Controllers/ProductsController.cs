@@ -28,7 +28,8 @@ namespace BackEnd.Controllers
                 Description = x.Description,
                 Price=x.Price,
                 CategoryID = x.CategoryID,
-                Image = x.ProductImage
+                Image = x.ProductImage,
+                RatingAVG = x.RatingAverage
                 
             }).ToListAsync();
             
@@ -47,7 +48,8 @@ namespace BackEnd.Controllers
                 Price = products.Price,
                 Description = products.Description,
                 CategoryID = products.CategoryID,
-                Image = products.ProductImage
+                Image = products.ProductImage,
+                RatingAVG = products.RatingAverage
                 
             };
             return product;
@@ -61,7 +63,9 @@ namespace BackEnd.Controllers
                 ProductName = model.Name,
                 Description = model.Description,
                 Price = model.Price,
-                CategoryID = model.CategoryID
+                CategoryID = model.CategoryID,
+                RatingAverage = model.RatingAVG
+                
             };
             _dataContext.Products.Add(product);
             await _dataContext.SaveChangesAsync();
@@ -77,6 +81,7 @@ namespace BackEnd.Controllers
             product.Description = model.Description;
             product.Price = model.Price;
             product.CategoryID = model.CategoryID;
+            product.RatingAverage = model.RatingAVG;
             await _dataContext.SaveChangesAsync();
             return NotFound();
         }

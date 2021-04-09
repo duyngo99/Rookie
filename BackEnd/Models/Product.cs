@@ -1,3 +1,4 @@
+
 namespace BackEnd.Models
 {
     public class Product
@@ -9,6 +10,8 @@ namespace BackEnd.Models
         public byte[] ProductImage { get; set; }
         public int CategoryID { get; set; }
         public Category Category { get; set; }
+        public double RatingAverage { get; set; }
+
     
     }
 
