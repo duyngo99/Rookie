@@ -14,5 +14,6 @@ namespace BackEnd.Models
 
         [PersonalData]
         public string FullName { get; set; }
+
     }
 }
