@@ -23,9 +23,8 @@ namespace BackEnd.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<RatingVm>>> GetRating(){
             return await  _dataContext.Rating.Select(x => new RatingVm{
-                Id=x.RatingID,
-               RatingText = x.RatingText,
-
+            Id=x.RatingID,
+            RatingText = x.RatingText,
             ProductID = x.ProductID,
             UserName = x.UserName
                 
@@ -34,28 +33,28 @@ namespace BackEnd.Controllers
         }
          [HttpPost]
         public async Task<ActionResult<RatingVm>> PostRating(RatingVm x){
-            var product = new Rating {
+            var rating = new Rating {
                 
-               RatingText = x.RatingText,
+            RatingText = x.RatingText,
             ProductID = x.ProductID,
             UserName = x.UserName
             };
-            _dataContext.Rating.Add(product);
+            _dataContext.Rating.Add(rating);
             await _dataContext.SaveChangesAsync();
             return Accepted();
         }
         [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<ActionResult<RatingVm>> GetRatingById(int id ){
-            var products = await _dataContext.Rating.FindAsync(id);
-            if (products == null){
+            var rating = await _dataContext.Rating.FindAsync(id);
+            if (rating == null){
                 return NotFound();
             }
             var product = new RatingVm {
-                Id =products.RatingID,
-                UserName = products.UserName,
-                ProductID = products.ProductID,
-                RatingText = products.RatingText
+                Id = rating.RatingID,
+                UserName = rating.UserName,
+                ProductID = rating.ProductID,
+                RatingText = rating.RatingText
 
                 
             };
@@ -64,11 +63,11 @@ namespace BackEnd.Controllers
 
         [HttpDelete("{id}")]
         public async Task <ActionResult> DeleteRating(int id){
-            var product = await _dataContext.Rating.FirstOrDefaultAsync(x => x.RatingID ==id);
-            if(product == null){
+            var rating = await _dataContext.Rating.FirstOrDefaultAsync(x => x.RatingID ==id);
+            if( rating == null){
                 return NotFound();
             }
-            _dataContext.Rating.Remove(product);
+            _dataContext.Rating.Remove(rating);
             await _dataContext.SaveChangesAsync();
             return NoContent();
             
