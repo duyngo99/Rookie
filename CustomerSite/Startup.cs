@@ -54,11 +54,12 @@ namespace CustomerSite
                     };
                 });
 
-
+            
             services.AddControllersWithViews();
             services.AddHttpClient();
             services.AddTransient<IProductApiClient, ProductApiClient>();
             services.AddTransient<ICategoryApiClient, CategoryApiClient>();
+            services.AddTransient<IRatingApiClient, RatingApiClient>(); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
