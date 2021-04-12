@@ -16,7 +16,7 @@ namespace CustomerSite.Services
 
          Task<IEnumerable<ProductVm>> GetCateByProduct(int id);
 
-        Task PuttRatingProduct(int ProId,ProductFormVm model);
+         Task PuttRatingProduct(int ProId,ProductFormVm model);
 
 
     }
