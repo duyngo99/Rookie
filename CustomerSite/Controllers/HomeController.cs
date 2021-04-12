@@ -52,7 +52,7 @@ namespace CustomerSite.Controllers
         public async Task<IActionResult> Rating(IFormCollection form) {
             int proId=int.Parse(form["proId"]);
             string userName=form["userName"].ToString();
-            int rate=int.Parse(form["rate"]);
+            double rate=double.Parse(form["rate"]);
             if(await _ratingApiClient.SearchRating(proId,userName ) != null) {
                   _ratingApiClient.RemoveRating(proId,userName);
             }                          

@@ -10,7 +10,7 @@ namespace CustomerSite.Services
         Task PostRatingByID(int ProId,string UserName,double RatingText);
         Task<RatingVm> SearchRating(int ProId,string UserName);
 
-         Task RemoveRating(int ProId,string UserName);
+        Task RemoveRating(int ProId,string UserName);
 
          Task<double> FindRatingByProduct(int ProId);
     }
