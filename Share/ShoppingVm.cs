@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 
-namespace BackEnd.Models
+namespace Share
 {
-    public class ShoppingCart
+    public class ShoppingVm
     {
-
         public string ShoppingCartID { get; set; }
+
+        
         public int ShoppingCartItemID { get; set; }
     }
 }

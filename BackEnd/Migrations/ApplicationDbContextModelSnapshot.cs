@@ -89,6 +89,24 @@ namespace BackEnd.Migrations
                     b.ToTable("Rating");
                 });
 
+            modelBuilder.Entity("BackEnd.Models.ShoppingCartItem", b =>
+                {
+                    b.Property<int>("ShoppingCartItemID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ShoppingCartID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ShoppingCartItemID");
+
+                    b.ToTable("ShoppingCartITem");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")

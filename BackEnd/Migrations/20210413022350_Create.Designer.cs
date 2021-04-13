@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackEnd.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210409072839_Create")]
+    [Migration("20210413022350_Create")]
     partial class Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -89,6 +89,24 @@ namespace BackEnd.Migrations
                     b.HasIndex("ProductID");
 
                     b.ToTable("Rating");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.ShoppingCartItem", b =>
+                {
+                    b.Property<int>("ShoppingCartItemID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ShoppingCartID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ShoppingCartItemID");
+
+                    b.ToTable("ShoppingCartITem");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
