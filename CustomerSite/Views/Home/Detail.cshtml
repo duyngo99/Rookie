@@ -50,7 +50,7 @@
             <div>
               @if(User.Identity.IsAuthenticated){
                using(Html.BeginForm("Rating","Home")) {
-              <input type="number" min="1" max="5" step="0.5" class="form-control" name="rate" placeholder="Rate our product" aria-label="Recipient's username" aria-describedby="button-addon2">
+              <input type="number" min="1" max="5" step="1" class="form-control" name="rate" placeholder="Rate our product" aria-label="Recipient's username" aria-describedby="button-addon2">
               <div class="input-group-append">
                 <input type="hidden" name="proId"  value="@Model.ProductID">
                   <input type="hidden" name="userName" value="@User.Identity.Name">
