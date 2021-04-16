@@ -26,14 +26,8 @@
             <div class="product-detail-side"> <span class="new-price">@Model.Price $</span></div>
            
                 <div class="detail-contant">
-              <p>@Model.Description<br> <p> Our product has <b> @Model.RatingAVG / 5</b> ratings </p>
-              <form class="cart" method="post" action="it_cart.html">
-                <div class="quantity">
-                  <input step="1" min="1" max="5" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" type="number">
-                  
-                </div>
-                <button type="submit" class="btn sqaure_bt">Add to cart</button>
-              </form>
+              <p>@Model.Description<br> <p> Our product has <b> @Model.RatingAVG / 5</b> ratings </p>          
+                <a asp-route-id="@Model.ProductID" class="btn sqaure_bt" asp-controller="Cart" asp-action="Buy">Add to cart</a>
               </div>
 
             <div class="share-post"> <a href="#" class="share-text">Share</a>

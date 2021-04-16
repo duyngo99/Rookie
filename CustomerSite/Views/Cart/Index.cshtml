@@ -1,0 +1,162 @@
+<form action="">
+  <div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 col-md-12">
+          <div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th></th>
+                  <th>Quantity</th>
+                  <th class="text-center">Price</th>
+                  <th class="text-center">Total</th>
+                </tr>
+              </thead>
+              @if (ViewBag.cart != null)
+              {
+                <tbody>
+                  @foreach (var item in ViewBag.cart)
+                  {
+                    var imgSrc = "~/images/noImage.jpg";
+                    if (item.Product.Image != null)
+                    {
+                      var base64 = Convert.ToBase64String(item.Product.Image);
+                      imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                    }
+                    <tr>
+                      <td><a class="remove" asp-controller="Cart" asp-action="Remove"
+                      asp-route-id="@item.Product.ProductID">
+                          <fa class="fa fa-close"></fa>
+                        </a></td>
+                      <td class>
+                        <div class="media"><a class="thumbnail pull-left" asp-action="Detail" asp-controller="Home"
+                        asp-route-id='@item.Product.ProductID'> <img src="@imgSrc" width="300px"></a>
+                          <div class="media-body">
+                            <h4 class="media-heading"><a asp-action="Detail" asp-controller="Home"
+                            asp-route-id='@item.Product.ProductID'>@item.Product.ProductName</a></h4>
+                          </div>
+                      </td>
+                      <td class="aa-cart-quantity">@item.Quantity</td>
+                      <td class="col-sm-1 col-md-1 text-center"> @item.Product.Price</td>
+                      <td>
+                        <h5>@(item.Product.Price*item.Quantity) VND</h5>
+                      </td>
+                      <td class="col-md-1"><a asp-action="AddItem" asp-controller="Cart"
+                      asp-route-id='@item.Product.ProductID' class="bt_main"><i class="fa fa-plus"></i></a></td>
+                      <td class="col-md-1"><a asp-action="DropItem" asp-controller="Cart"
+                      asp-route-id='@item.Product.ProductID' class="bt_main"><i class="fa fa-minus"></i></a></td>
+                    </tr>
+
+                  }
+                </tbody>
+              }
+            </table>
+          </div>
+          <div class="cart-view-total">
+            <h4>Cart Totals</h4>
+            <table class="table">
+              <tbody>
+                <tr class="cart-form">
+                  <th>Subtotal</th>
+                  <td>@ViewBag.total</td>
+                </tr>
+                <tr>
+                  <th>Total</th>
+                  <td>@ViewBag.total</td>
+                </tr>
+                <tr>
+                  <td colspan="6" class="btn btn-primary" aria-pressed="true">
+                    Update Cart
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div media-body>@if (ViewBag.cart != null)
+              {
+                <a asp-action="Index" asp-controller="Checkout" class="aa-cart-view-btn">Proced to Checkout</a>
+              }
+            </div>
+            <br><br><br>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<!-- section -->
+<div class="section padding_layout_1 testmonial_section white_fonts">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="full">
+          <div class="main_heading text_align_left">
+            <h2 style="text-transform: none;">What Clients Say?</h2>
+            <p class="large">Here are testimonials from clients..</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-7">
+        <div class="full">
+          <div id="testimonial_slider" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ul class="carousel-indicators">
+              <li data-target="#testimonial_slider" data-slide-to="0" class="active"></li>
+              <li data-target="#testimonial_slider" data-slide-to="1"></li>
+              <li data-target="#testimonial_slider" data-slide-to="2"></li>
+            </ul>
+            <!-- The slideshow -->
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <div class="testimonial-container">
+                  <div class="testimonial-content"> You guys rock! Thank you for making it painless, pleasant and most
+                    of all hassle free! I wish I would have thought of it first.
+                    I am really satisfied with my first laptop service. </div>
+                  <div class="testimonial-photo"> <img src="images/it_service/client1.jpg" class="img-responsive"
+                      alt="#" width="150" height="150"> </div>
+                  <div class="testimonial-meta">
+                    <h4>Maria Anderson</h4>
+                    <span class="testimonial-position">CFO, Tech NY</span>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="testimonial-container">
+                  <div class="testimonial-content"> You guys rock! Thank you for making it painless, pleasant and most
+                    of all hassle free! I wish I would have thought of it first.
+                    I am really satisfied with my first laptop service. </div>
+                  <div class="testimonial-photo"> <img src="images/it_service/client2.jpg" class="img-responsive"
+                      alt="#" width="150" height="150"> </div>
+                  <div class="testimonial-meta">
+                    <h4>Maria Anderson</h4>
+                    <span class="testimonial-position">CFO, Tech NY</span>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="testimonial-container">
+                  <div class="testimonial-content"> You guys rock! Thank you for making it painless, pleasant and most
+                    of all hassle free! I wish I would have thought of it first.
+                    I am really satisfied with my first laptop service. </div>
+                  <div class="testimonial-photo"> <img src="images/it_service/client3.jpg" class="img-responsive"
+                      alt="#" width="150" height="150"> </div>
+                  <div class="testimonial-meta">
+                    <h4>Maria Anderson</h4>
+                    <span class="testimonial-position">CFO, Tech NY</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-5">
+        <div class="full"> </div>
+      </div>
+    </div>
+  </div>
+</div>

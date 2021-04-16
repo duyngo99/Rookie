@@ -16,6 +16,7 @@ using Microsoft.OpenApi.Models;
 using BackEnd.Models;
 using BackEnd.IdentityServer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
 
 namespace BackEnd
 {
@@ -71,6 +72,7 @@ namespace BackEnd
             });
 
             services.AddControllersWithViews();
+            
 
             services.AddSwaggerGen(c =>
             {

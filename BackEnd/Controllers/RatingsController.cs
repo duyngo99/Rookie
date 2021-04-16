@@ -31,7 +31,7 @@ namespace BackEnd.Controllers
             }).ToListAsync();
             
         }
-         [HttpPost]
+        [HttpPost]
         public async Task<ActionResult<RatingVm>> PostRating(RatingVm x){
             var rating = new Rating {
                 
@@ -46,6 +46,7 @@ namespace BackEnd.Controllers
         [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<ActionResult<RatingVm>> GetRatingById(int id ){
+            
             var rating = await _dataContext.Rating.FindAsync(id);
             if (rating == null){
                 return NotFound();
@@ -72,5 +73,10 @@ namespace BackEnd.Controllers
             return NoContent();
             
         }
+
+
+        
+
+
     }
 }

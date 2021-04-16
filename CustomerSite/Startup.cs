@@ -60,6 +60,12 @@ namespace CustomerSite
             services.AddTransient<IProductApiClient, ProductApiClient>();
             services.AddTransient<ICategoryApiClient, CategoryApiClient>();
             services.AddTransient<IRatingApiClient, RatingApiClient>(); 
+            services.AddDistributedMemoryCache();
+            services.AddSession(options=>{
+                options.IdleTimeout=TimeSpan.FromSeconds(20);
+                options.Cookie.HttpOnly=true;
+                options.Cookie.IsEssential=true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,6 +87,7 @@ namespace CustomerSite
             app.UseRouting();
 
             app.UseAuthentication();
+            app.UseSession();  
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

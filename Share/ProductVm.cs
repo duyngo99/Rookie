@@ -9,5 +9,6 @@ namespace Share
         public int CategoryID { get; set; }
         public byte[] Image { get; set; }
         public double RatingAVG  { get ; set ;}
+        public double Quantity { get; set; }
     }
 }

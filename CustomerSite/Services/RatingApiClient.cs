@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Share;
 using Microsoft.AspNetCore.Http.Extensions; 
+using Microsoft.AspNetCore.Identity;
 
 namespace CustomerSite.Services
 {
     public class RatingApiClient : IRatingApiClient
     {
+        
         private readonly IHttpClientFactory _httpClientFactory;
 
         public RatingApiClient(IHttpClientFactory httpClientFactory)
@@ -28,13 +30,14 @@ namespace CustomerSite.Services
         }
 
         public async Task PostRatingByID(int ProId,string UserName,double RatingText){
+            
             var client = new HttpClient();
             RatingVm jsonInString= new RatingVm{ProductID=ProId,UserName=UserName,RatingText=RatingText};
             await client.PostAsync("https://localhost:5001/api/ratings", new StringContent(JsonConvert.SerializeObject(jsonInString), Encoding.UTF8, "application/json"));
             
         }
         public async Task<RatingVm> SearchRating(int ProId,string UserName){
-             var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient();
             var response = await client.GetAsync("https://localhost:5001/api/ratings");
             response.EnsureSuccessStatusCode();
             IList<RatingVm> ratingVms = await response.Content.ReadAsAsync<IList<RatingVm>>();
