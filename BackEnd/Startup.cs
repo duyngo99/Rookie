@@ -28,10 +28,16 @@ namespace BackEnd
         }
 
         public IConfiguration Configuration { get; }
+        public static Dictionary<string, string> clientUrls;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            clientUrls = new Dictionary<string, string>
+            {
+                ["CustomerSite"] = Configuration["ClientUrl:CustomerSite"],
+                ["Backend"] = Configuration["ClientUrl:Backend"],
+            };
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -40,7 +46,7 @@ namespace BackEnd
             services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
+            services.AddCors();
             services.AddIdentityServer(options =>
             {
                 options.Events.RaiseErrorEvents = true;
@@ -51,7 +57,7 @@ namespace BackEnd
             })
                .AddInMemoryIdentityResources(IdentityServerConfig.IdentityResources)
                .AddInMemoryApiScopes(IdentityServerConfig.ApiScopes)
-               .AddInMemoryClients(IdentityServerConfig.Clients)
+               .AddInMemoryClients(IdentityServerConfig.Clients(clientUrls))
                .AddAspNetIdentity<User>()
                .AddProfileService<CustomProfileService>()
                .AddDeveloperSigningCredential(); // not recommended for production - you need to store your key material somewhere secure
@@ -72,7 +78,7 @@ namespace BackEnd
             });
 
             services.AddControllersWithViews();
-            
+
 
             services.AddSwaggerGen(c =>
             {
@@ -86,7 +92,7 @@ namespace BackEnd
                         {
                             TokenUrl = new Uri("/connect/token", UriKind.Relative),
                             AuthorizationUrl = new Uri("/connect/authorize", UriKind.Relative),
-                            Scopes = new Dictionary<string, string> { { "rookieshop.api", "Rookie Shop API" } }
+                            Scopes = new Dictionary<string, string> { { "rookieshop.api", "Rookie API" } }
                         },
                     },
                 });
@@ -119,7 +125,7 @@ namespace BackEnd
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseCors(options => options.WithOrigins(clientUrls["CustomerSite"]).AllowAnyMethod().AllowAnyHeader());
             app.UseRouting();
 
             app.UseIdentityServer();

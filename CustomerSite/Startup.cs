@@ -21,10 +21,16 @@ namespace CustomerSite
         }
 
         public IConfiguration Configuration { get; }
+        public static Dictionary<string, string> clientUrls;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            clientUrls = new Dictionary<string, string>
+            {
+                ["Backend"] = Configuration["ClientUrl:Backend"],
+            };
+
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = "Cookies";
@@ -54,17 +60,20 @@ namespace CustomerSite
                     };
                 });
 
-            
+
             services.AddControllersWithViews();
             services.AddHttpClient();
             services.AddTransient<IProductApiClient, ProductApiClient>();
             services.AddTransient<ICategoryApiClient, CategoryApiClient>();
-            services.AddTransient<IRatingApiClient, RatingApiClient>(); 
+            services.AddTransient<IRatingApiClient, RatingApiClient>();
             services.AddDistributedMemoryCache();
-            services.AddSession(options=>{
-                options.IdleTimeout=TimeSpan.FromSeconds(20);
-                options.Cookie.HttpOnly=true;
-                options.Cookie.IsEssential=true;
+
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(20);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
             });
         }
 
@@ -87,7 +96,7 @@ namespace CustomerSite
             app.UseRouting();
 
             app.UseAuthentication();
-            app.UseSession();  
+            app.UseSession();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
