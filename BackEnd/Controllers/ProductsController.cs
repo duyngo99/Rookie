@@ -57,7 +57,7 @@ namespace BackEnd.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<ProductVm>> CreateProduct(ProductFormVm model){
+        public async Task<ActionResult<ProductVm>> CreateProduct([FromBody] ProductFormVm model){
             var product = new Product {
                 
                 ProductName = model.Name,
@@ -69,7 +69,7 @@ namespace BackEnd.Controllers
             };
             _dataContext.Products.Add(product);
             await _dataContext.SaveChangesAsync();
-            return CreatedAtAction("Get Product",new {id = product.ProductID}, new ProductVm{ProductID = product.ProductID,ProductName = product.ProductName});
+            return Accepted();
         }
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateProduct(int id, ProductFormVm model){

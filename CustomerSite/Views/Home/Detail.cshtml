@@ -42,7 +42,7 @@
             <br>
             <hr>
             <div>
-              @if(User.Identity.IsAuthenticated){
+              @if(User.Identity.IsAuthenticated ){
                using(Html.BeginForm("Rating","Home")) {
               <input type="number" min="1" max="5" step="1" class="form-control" name="rate" placeholder="Rate our product" aria-label="Recipient's username" aria-describedby="button-addon2">
               <div class="input-group-append">
