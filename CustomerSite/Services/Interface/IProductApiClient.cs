@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Share;
 
-namespace CustomerSite.Services
+namespace CustomerSite.Services.Interface
 {
     public interface IProductApiClient
     {
@@ -17,7 +17,6 @@ namespace CustomerSite.Services
          Task<IEnumerable<ProductVm>> GetCateByProduct(int id);
 
          Task PuttRatingProduct(int ProId,ProductFormVm model);
-
 
     }
 }

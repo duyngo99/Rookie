@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CustomerSite.Services;
+using CustomerSite.Services.API;
+using CustomerSite.Services.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,6 +30,7 @@ namespace CustomerSite
             clientUrls = new Dictionary<string, string>
             {
                 ["Backend"] = Configuration["ClientUrl:Backend"],
+                ["BackendUrl"] = Configuration["BackendUrl:Default"]
             };
 
             services.AddAuthentication(options =>
@@ -39,7 +41,7 @@ namespace CustomerSite
                 .AddCookie("Cookies")
                 .AddOpenIdConnect("oidc", options =>
                 {
-                    options.Authority = "https://localhost:5001";
+                    options.Authority = "http://slash1999.azurewebsites.net";
                     options.RequireHttpsMetadata = false;
                     options.GetClaimsFromUserInfoEndpoint = true;
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CustomerSite.Models;
-using CustomerSite.Services;
+using CustomerSite.Services.Interface;
 using CustomerSite.Helpers;
 using Microsoft.AspNetCore.Http;
 

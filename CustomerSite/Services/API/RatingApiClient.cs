@@ -9,8 +9,8 @@ using Share;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-
-namespace CustomerSite.Services
+using CustomerSite.Services.Interface;
+namespace CustomerSite.Services.API
 {
     public class RatingApiClient : IRatingApiClient
     {
@@ -18,15 +18,16 @@ namespace CustomerSite.Services
 
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public RatingApiClient(IHttpClientFactory httpClientFactory)
+        public RatingApiClient(IHttpClientFactory httpClientFactory,IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
+            _configuration=configuration;
         }
 
         public async Task<IList<RatingVm>> GetRating()
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync(_configuration["BackendUrl:Default"] + "/api/ratings");
+            var response = await client.GetAsync(_configuration["BackendUrl:Default"] + "api/ratings");
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadAsAsync<IList<RatingVm>>();
 
@@ -37,13 +38,13 @@ namespace CustomerSite.Services
 
             var client = new HttpClient();
             RatingVm jsonInString = new RatingVm { ProductID = ProId, UserName = UserName, RatingText = RatingText };
-            await client.PostAsync(_configuration["BackendUrl:Default"] + "/api/ratings", new StringContent(JsonConvert.SerializeObject(jsonInString), Encoding.UTF8, "application/json"));
+            await client.PostAsync(_configuration["BackendUrl:Default"] + "api/ratings", new StringContent(JsonConvert.SerializeObject(jsonInString), Encoding.UTF8, "application/json"));
 
         }
         public async Task<RatingVm> SearchRating(int ProId, string UserName)
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync(_configuration["BackendUrl:Default"] + "/api/ratings");
+            var response = await client.GetAsync(_configuration["BackendUrl:Default"] + "api/ratings");
             response.EnsureSuccessStatusCode();
             IList<RatingVm> ratingVms = await response.Content.ReadAsAsync<IList<RatingVm>>();
             return ratingVms.FirstOrDefault(x => x.ProductID == ProId && x.UserName == UserName);
@@ -54,7 +55,7 @@ namespace CustomerSite.Services
         {
             RatingVm ratingVms = await SearchRating(ProId, UserName);
             var client = new HttpClient();
-            await client.DeleteAsync(_configuration["BackendUrl:Default"] + "/api/ratings" + ratingVms.Id);
+            await client.DeleteAsync(_configuration["BackendUrl:Default"] + "api/ratings" + ratingVms.Id);
 
 
         }
@@ -62,7 +63,7 @@ namespace CustomerSite.Services
         public async Task<double> FindRatingByProduct(int ProId)
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync(_configuration["BackendUrl:Default"] + "/api/ratings");
+            var response = await client.GetAsync(_configuration["BackendUrl:Default"] + "api/ratings");
             response.EnsureSuccessStatusCode();
             IList<RatingVm> ratingVms = await response.Content.ReadAsAsync<IList<RatingVm>>();
             var ratings = ratingVms.Where(x => x.ProductID == ProId);
