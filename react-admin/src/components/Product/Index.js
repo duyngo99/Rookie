@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { BrowserRouter, Switch, Route, Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 
-import Update from './update'
-import Delete from './DeleteProduct'
-import Add from './Add'
-import { Form, FormGroup, Label, Input, Button, Table } from 'reactstrap'
+import { Button, Table } from 'reactstrap'
 
 
 function Index() {
