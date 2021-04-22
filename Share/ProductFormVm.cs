@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 namespace Share
 {
     public class ProductFormVm
@@ -6,7 +7,8 @@ namespace Share
         public decimal Price { get; set; }
         public string Description { get; set; }
         public int CategoryID { get; set; }
-        public byte[] Image { get; set; }
-        public double RatingAVG  { get ; set ;}
+        public string Image { get; set; }
+        public IFormFile ImageFile { get; set; }
+        public double RatingAVG { get; set; }
     }
 }

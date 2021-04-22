@@ -1,11 +1,6 @@
 @model Share.ProductVm
 @{
-    ViewData["Title"] = "Home Page";
-    var imgSrc = "~/images/noImage.jpg";
-    if(Model.Image != null) {
-    var base64 = Convert.ToBase64String(Model.Image);
-    imgSrc = String.Format("data:image/gif;base64,{0}",base64);
-    }
+  ViewData["Title"] = "Home Page";
 }
 
 
@@ -16,7 +11,7 @@
         <div class="row">
           <div class="col-xl-6 col-lg-12 col-md-12">
             <div class="product_detail_feature_img hizoom hi2">
-              <div class='hizoom hi2'> <img src="@imgSrc" alt="#" /> </div>
+              <div class='hizoom hi2'> <img src="@Model.Image" alt="#" /> </div>
             </div>
           </div>
           <div class="col-xl-6 col-lg-12 col-md-12 product_detail_side detail_style1">
@@ -24,11 +19,13 @@
               <h2>@Model.ProductName</h2>
             </div>
             <div class="product-detail-side"> <span class="new-price">@Model.Price $</span></div>
-           
-                <div class="detail-contant">
-              <p>@Model.Description<br> <p> Our product has <b> @Model.RatingAVG / 5</b> ratings </p>          
-                <a asp-route-id="@Model.ProductID" class="btn sqaure_bt" asp-controller="Cart" asp-action="Buy">Add to cart</a>
-              </div>
+
+            <div class="detail-contant">
+              <p>@Model.Description<br>
+              <p> Our product has <b> @Model.RatingAVG / 5</b> ratings </p>
+              <a asp-route-id="@Model.ProductID" class="btn sqaure_bt" asp-controller="Cart" asp-action="Buy">Add to
+                cart</a>
+            </div>
 
             <div class="share-post"> <a href="#" class="share-text">Share</a>
               <ul class="social_icons">
@@ -42,16 +39,19 @@
             <br>
             <hr>
             <div>
-              @if(User.Identity.IsAuthenticated ){
-               using(Html.BeginForm("Rating","Home")) {
-              <input type="number" min="1" max="5" step="1" class="form-control" name="rate" placeholder="Rate our product" aria-label="Recipient's username" aria-describedby="button-addon2">
-              <div class="input-group-append">
-                <input type="hidden" name="proId"  value="@Model.ProductID">
-                  <input type="hidden" name="userName" value="@User.Identity.Name">
-                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Rate</button>
-              </div>
+              @if (User.Identity.IsAuthenticated)
+              {
+                using (Html.BeginForm("Rating", "Home"))
+                {
+                  <input type="number" min="1" max="5" step="1" class="form-control" name="rate"
+                placeholder="Rate our product" aria-label="Recipient's username" aria-describedby="button-addon2">
+                  <div class="input-group-append">
+                    <input type="hidden" name="proId" value="@Model.ProductID">
+                    <input type="hidden" name="userName" value="@User.Identity.Name">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Rate</button>
+                  </div>
+                }
               }
-            }
             </div>
 
           </div>
@@ -61,21 +61,28 @@
             <div class="full">
               <div class="tab_bar_section">
                 <ul class="nav nav-tabs" role="tablist">
-                  <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#description">Description</a> </li>
+                  <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#description">Description</a>
+                  </li>
                   <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#reviews">Reviews (2)</a> </li>
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content">
                   <div id="description" class="tab-pane active">
                     <div class="product_desc">
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac elementum elit. Morbi eu arcu ipsum. Aliquam lobortis accumsan quam ac convallis. 
-                        Fusce elit mauris, aliquet at odio vel, convallis vehicula nisi. Morbi vitae porttitor dolor. Integer eget metus sem. Nam venenatis mauris vel leo pulvinar, 
-                        id rutrum dui varius. Nunc ac varius quam, non convallis magna. Donec suscipit commodo dapibus.<br>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac elementum elit. Morbi eu
+                        arcu ipsum. Aliquam lobortis accumsan quam ac convallis.
+                        Fusce elit mauris, aliquet at odio vel, convallis vehicula nisi. Morbi vitae porttitor dolor.
+                        Integer eget metus sem. Nam venenatis mauris vel leo pulvinar,
+                        id rutrum dui varius. Nunc ac varius quam, non convallis magna. Donec suscipit commodo
+                        dapibus.<br>
                         <br>
-                        Vestibulum et ullamcorper ligula. Morbi bibendum tempor rutrum. 
-                        Pelle tesque auctor purus id molestie ornare.Donec eu lobortis risus. Pellentesque sed aliquam lorem. Praesent pulvinar lorem vel mauris ultrices posuere. 
-                        Phasellus elit ex, gravida a semper ut, venenatis vitae diam. Nullam eget leo massa. Aenean eu consequat arcu, vitae scelerisque quam. Suspendisse risus turpis, 
-                        pharetra a finibus vitae, lobortis et mi.</p>
+                        Vestibulum et ullamcorper ligula. Morbi bibendum tempor rutrum.
+                        Pelle tesque auctor purus id molestie ornare.Donec eu lobortis risus. Pellentesque sed aliquam
+                        lorem. Praesent pulvinar lorem vel mauris ultrices posuere.
+                        Phasellus elit ex, gravida a semper ut, venenatis vitae diam. Nullam eget leo massa. Aenean eu
+                        consequat arcu, vitae scelerisque quam. Suspendisse risus turpis,
+                        pharetra a finibus vitae, lobortis et mi.
+                      </p>
                     </div>
                   </div>
                   <div id="reviews" class="tab-pane fade">
@@ -83,37 +90,54 @@
                       <h3>Reviews (2)</h3>
                       <div class="commant-text row">
                         <div class="col-lg-2 col-md-2 col-sm-4">
-                          <div class="profile"> <img class="img-responsive" src="images/it_service/client1.png" alt="#"> </div>
+                          <div class="profile"> <img class="img-responsive" src="images/it_service/client1.png" alt="#">
+                          </div>
                         </div>
                         <div class="col-lg-10 col-md-10 col-sm-8">
                           <h5>David</h5>
-                          <p><span class="c_date">March 2, 2018</span> | <span><a rel="nofollow" class="comment-reply-link" href="#">Reply</a></span></p>
-                          <span class="rating"> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i> </span>
-                          <p class="msg">ThisThis book is a treatise on the theory of ethics, very popular during the Renaissance. 
+                          <p><span class="c_date">March 2, 2018</span> | <span><a rel="nofollow"
+                                class="comment-reply-link" href="#">Reply</a></span></p>
+                          <span class="rating"> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star"
+                              aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i
+                              class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i>
+                          </span>
+                          <p class="msg">ThisThis book is a treatise on the theory of ethics, very popular during the
+                            Renaissance.
                             The first line of Lorem Ipsum, “Lorem ipsum dolor sit amet.. </p>
                         </div>
                       </div>
                       <div class="commant-text row">
                         <div class="col-lg-2 col-md-2 col-sm-4">
-                          <div class="profile"> <img class="img-responsive" src="images/it_service/client2.png" alt="#"> </div>
+                          <div class="profile"> <img class="img-responsive" src="images/it_service/client2.png" alt="#">
+                          </div>
                         </div>
                         <div class="col-lg-10 col-md-10 col-sm-8">
                           <h5>Jack</h5>
-                          <p><span class="c_date">March 2, 2018</span> | <span><a rel="nofollow" class="comment-reply-link" href="#">Reply</a></span></p>
-                          <span class="rating"> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i> </span>
-                          <p class="msg">Nunc augue purus, posuere in accumsan sodales ac, euismod at est. Nunc faccumsan ermentum consectetur metus placerat mattis. Praesent mollis justo felis, accumsan faucibus mi maximus et. Nam hendrerit mauris id scelerisque placerat. Nam vitae imperdiet turpis</p>
+                          <p><span class="c_date">March 2, 2018</span> | <span><a rel="nofollow"
+                                class="comment-reply-link" href="#">Reply</a></span></p>
+                          <span class="rating"> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star"
+                              aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i
+                              class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i>
+                          </span>
+                          <p class="msg">Nunc augue purus, posuere in accumsan sodales ac, euismod at est. Nunc
+                            faccumsan ermentum consectetur metus placerat mattis. Praesent mollis justo felis, accumsan
+                            faucibus mi maximus et. Nam hendrerit mauris id scelerisque placerat. Nam vitae imperdiet
+                            turpis</p>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-sm-12">
                           <div class="full review_bt_section">
-                            <div class="float-right"> <a class="btn sqaure_bt" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Leave a Review</a> </div>
+                            <div class="float-right"> <a class="btn sqaure_bt" data-toggle="collapse"
+                                href="#collapseExample" role="button" aria-expanded="false"
+                                aria-controls="collapseExample">Leave a Review</a> </div>
                           </div>
                           <div class="full">
                             <div id="collapseExample" class="full collapse commant_box">
                               <form accept-charset="UTF-8" action="index.html" method="post">
                                 <input id="ratings-hidden" name="rating" type="hidden">
-                                <textarea class="form-control animated" cols="50" id="new-review" name="comment" placeholder="Enter your review here..." required=""></textarea>
+                                <textarea class="form-control animated" cols="50" id="new-review" name="comment"
+                                  placeholder="Enter your review here..." required=""></textarea>
                                 <div class="full_bt center">
                                   <button class="btn sqaure_bt" type="submit">Save</button>
                                 </div>
@@ -139,7 +163,7 @@
           </div>
         </div>
         <div class="row">
-           @await Component.InvokeAsync("ProductRelativeMenu",Model.ProductID)
+          @await Component.InvokeAsync("ProductRelativeMenu",Model.ProductID)
         </div>
       </div>
       <div class="col-md-3">
@@ -150,14 +174,17 @@
               <div class="input-group stylish-input-group">
                 <input class="form-control" placeholder="Search" type="text">
                 <span class="input-group-addon">
-                <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                </span> </div>
+                  <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </span>
+              </div>
             </div>
           </div>
           <div class="side_bar_blog">
             <h4>GET A QUOTE</h4>
-            <p>An duo lorem altera gloriatur. No imperdiet adver sarium pro. No sit sumo lorem. Mei ea eius elitr consequ unturimperdiet.</p>
-            <a class="btn sqaure_bt" href="it_service.html">View Service</a> </div>
+            <p>An duo lorem altera gloriatur. No imperdiet adver sarium pro. No sit sumo lorem. Mei ea eius elitr
+              consequ unturimperdiet.</p>
+            <a class="btn sqaure_bt" href="it_service.html">View Service</a>
+          </div>
           <div class="side_bar_blog">
             <h4>OUR SERVICE</h4>
             <div class="categary">
@@ -174,10 +201,13 @@
             <h4>RECENT NEWS</h4>
             <div class="categary">
               <ul>
-                <li><a href="it_data_recovery.html"><i class="fa fa-angle-right"></i> Land lights let be divided</a></li>
-                <li><a href="it_computer_repair.html"><i class="fa fa-angle-right"></i> Seasons over bearing air</a></li>
+                <li><a href="it_data_recovery.html"><i class="fa fa-angle-right"></i> Land lights let be divided</a>
+                </li>
+                <li><a href="it_computer_repair.html"><i class="fa fa-angle-right"></i> Seasons over bearing air</a>
+                </li>
                 <li><a href="it_mobile_service.html"><i class="fa fa-angle-right"></i> Greater open after grass</a></li>
-                <li><a href="it_network_solution.html"><i class="fa fa-angle-right"></i> Gathered was divide second</a></li>
+                <li><a href="it_network_solution.html"><i class="fa fa-angle-right"></i> Gathered was divide second</a>
+                </li>
               </ul>
             </div>
           </div>
@@ -226,32 +256,41 @@
             <div class="carousel-inner">
               <div class="carousel-item active">
                 <div class="testimonial-container">
-                  <div class="testimonial-content"> You guys rock! Thank you for making it painless, pleasant and most of all hassle free! I wish I would have thought of it first. 
+                  <div class="testimonial-content"> You guys rock! Thank you for making it painless, pleasant and most
+                    of all hassle free! I wish I would have thought of it first.
                     I am really satisfied with my first laptop service. </div>
-                  <div class="testimonial-photo"> <img src="images/it_service/client1.jpg" class="img-responsive" alt="#" width="150" height="150"> </div>
+                  <div class="testimonial-photo"> <img src="images/it_service/client1.jpg" class="img-responsive"
+                      alt="#" width="150" height="150"> </div>
                   <div class="testimonial-meta">
                     <h4>Maria Anderson</h4>
-                    <span class="testimonial-position">CFO, Tech NY</span> </div>
+                    <span class="testimonial-position">CFO, Tech NY</span>
+                  </div>
                 </div>
               </div>
               <div class="carousel-item">
                 <div class="testimonial-container">
-                  <div class="testimonial-content"> You guys rock! Thank you for making it painless, pleasant and most of all hassle free! I wish I would have thought of it first. 
+                  <div class="testimonial-content"> You guys rock! Thank you for making it painless, pleasant and most
+                    of all hassle free! I wish I would have thought of it first.
                     I am really satisfied with my first laptop service. </div>
-                  <div class="testimonial-photo"> <img src="images/it_service/client2.jpg" class="img-responsive" alt="#" width="150" height="150"> </div>
+                  <div class="testimonial-photo"> <img src="images/it_service/client2.jpg" class="img-responsive"
+                      alt="#" width="150" height="150"> </div>
                   <div class="testimonial-meta">
                     <h4>Maria Anderson</h4>
-                    <span class="testimonial-position">CFO, Tech NY</span> </div>
+                    <span class="testimonial-position">CFO, Tech NY</span>
+                  </div>
                 </div>
               </div>
               <div class="carousel-item">
                 <div class="testimonial-container">
-                  <div class="testimonial-content"> You guys rock! Thank you for making it painless, pleasant and most of all hassle free! I wish I would have thought of it first. 
+                  <div class="testimonial-content"> You guys rock! Thank you for making it painless, pleasant and most
+                    of all hassle free! I wish I would have thought of it first.
                     I am really satisfied with my first laptop service. </div>
-                  <div class="testimonial-photo"> <img src="images/it_service/client3.jpg" class="img-responsive" alt="#" width="150" height="150"> </div>
+                  <div class="testimonial-photo"> <img src="images/it_service/client3.jpg" class="img-responsive"
+                      alt="#" width="150" height="150"> </div>
                   <div class="testimonial-meta">
                     <h4>Maria Anderson</h4>
-                    <span class="testimonial-position">CFO, Tech NY</span> </div>
+                    <span class="testimonial-position">CFO, Tech NY</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -317,10 +356,11 @@
           <div class="col-lg-8 col-md-8 col-sm-8 offset-lg-2 offset-md-2 offset-sm-2 col-xs-10 col-xs-offset-1">
             <div class="navbar-search">
               <form action="#" method="get" id="search-global-form" class="search-global">
-                <input type="text" placeholder="Type to search" autocomplete="off" name="s" id="search" value="" class="search-global__input">
+                <input type="text" placeholder="Type to search" autocomplete="off" name="s" id="search" value=""
+                  class="search-global__input">
                 <button class="search-global__btn"><i class="fa fa-search"></i></button>
                 <div class="search-global__note">Begin typing your search above and press return to search.</div>
-              </form> 
+              </form>
             </div>
           </div>
         </div>

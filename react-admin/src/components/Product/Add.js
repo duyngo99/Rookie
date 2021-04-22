@@ -16,8 +16,7 @@ function Add() {
         formData.append('RatingAVG', parseFloat(addProduct.RatingAVG))
         formData.append('CategoryID', parseInt(addProduct.CategoryID))
         formData.append('Image', addProduct.Image)
-        // addProduct.Price = parseFloat(addProduct.Price)
-        // addProduct.CategoryID = parseFloat(addProduct.CategoryID)
+        console.log(formData)
         console.log(formData)
         axios.post("https://localhost:5001/api/products", formData).then(history.push('/product'))
     }

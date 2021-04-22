@@ -1,11 +1,16 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using BackEnd.Data;
 using BackEnd.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Share;
 
 namespace BackEnd.Controllers
@@ -15,34 +20,57 @@ namespace BackEnd.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly ApplicationDbContext _dataContext;
-        public ProductsController(ApplicationDbContext dataContext)
+        private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IConfiguration _configuration;
+        public ProductsController(ApplicationDbContext dataContext, IWebHostEnvironment hostEnvironment, IConfiguration configuration)
         {
             _dataContext = dataContext;
+            _hostEnvironment = hostEnvironment;
+            _configuration = configuration;
         }
+        [NonAction]
+        public async Task<string> SaveImage(IFormFile imageFile)
+        {
+            string imageName = new String(Path.GetFileNameWithoutExtension(imageFile.FileName).Take(10).ToArray()).Replace(' ', '-');
+            imageName = imageName + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(imageFile.FileName);
+            var imagePath = Path.Combine(_hostEnvironment.ContentRootPath, "image", imageName);
+            using (var fileStream = new FileStream(imagePath, FileMode.Create))
+            {
+                await imageFile.CopyToAsync(fileStream);
+            }
+            return imageName;
+        }
+
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<ProductVm>>> GetProduct(){
-            return await  _dataContext.Products.Select(x => new ProductVm{
+        public async Task<ActionResult<IEnumerable<ProductVm>>> GetProduct()
+        {
+            return await _dataContext.Products.Select(x => new ProductVm
+            {
                 ProductID = x.ProductID,
                 ProductName = x.ProductName,
                 Description = x.Description,
-                Price=x.Price,
+                Price = x.Price,
                 CategoryID = x.CategoryID,
                 Image = x.ProductImage,
-                RatingAVG = x.RatingAverage
-                
+                RatingAVG = x.RatingAverage,
+
+
             }).ToListAsync();
-            
-            
+
+
         }
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public async Task<ActionResult<ProductVm>> GetProduct(int id ){
+        public async Task<ActionResult<ProductVm>> GetProduct(int id)
+        {
             var products = await _dataContext.Products.FindAsync(id);
-            if (products == null){
+            if (products == null)
+            {
                 return NotFound();
             }
-            var product = new ProductVm {
+            var product = new ProductVm
+            {
                 ProductID = products.ProductID,
                 ProductName = products.ProductName,
                 Price = products.Price,
@@ -50,32 +78,37 @@ namespace BackEnd.Controllers
                 CategoryID = products.CategoryID,
                 Image = products.ProductImage,
                 RatingAVG = products.RatingAverage
-                
+
             };
             return product;
         }
 
 
         [HttpPost]
-        public async Task<ActionResult<ProductVm>> CreateProduct([FromForm] ProductFormVm model){
-            var product = new Product {
-                
+        public async Task<ActionResult<ProductVm>> CreateProduct([FromForm] ProductFormVm model)
+        {
+            model.Image = await SaveImage(model.ImageFile);
+            var product = new Product
+            {
+
                 ProductName = model.Name,
                 Description = model.Description,
                 Price = model.Price,
                 CategoryID = model.CategoryID,
                 RatingAverage = model.RatingAVG,
-                ProductImage=model.Image
-                
+                ProductImage = model.Image
+
             };
             _dataContext.Products.Add(product);
             await _dataContext.SaveChangesAsync();
             return Accepted();
         }
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateProduct(int id, ProductFormVm model){
+        public async Task<ActionResult> UpdateProduct(int id, ProductFormVm model)
+        {
             var product = await _dataContext.Products.FirstOrDefaultAsync(x => x.ProductID == id);
-            if (product == null){
+            if (product == null)
+            {
                 return NotFound();
             }
             product.ProductName = model.Name;
@@ -87,18 +120,20 @@ namespace BackEnd.Controllers
             return NotFound();
         }
         [HttpDelete("{id}")]
-        public async Task <ActionResult> DeleteProduct(int id){
-            var product = await _dataContext.Products.FirstOrDefaultAsync(x => x.ProductID ==id);
-            if(product == null){
+        public async Task<ActionResult> DeleteProduct(int id)
+        {
+            var product = await _dataContext.Products.FirstOrDefaultAsync(x => x.ProductID == id);
+            if (product == null)
+            {
                 return NotFound();
             }
             _dataContext.Products.Remove(product);
             await _dataContext.SaveChangesAsync();
             return NoContent();
-            
+
         }
 
 
-        
+
     }
 }
