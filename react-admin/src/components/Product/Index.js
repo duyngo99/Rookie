@@ -19,38 +19,40 @@ function Index() {
             console.log(productList)
         }
         )
-    },[])
+    }, [])
     return (
         <div className="row">
-        <div className="col-md-3"></div>
-        <div className="col-md-6" >
-            <Table>
-                <thead>
-                    <tr>
-                        <th>ProductName</th>
-                        <th>ID</th>
-                        <th>Price</th>
-                        <th>Des</th>
-                        <th>Cate</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        productList.map(product=>
-                            <tr>
-                                <td>{product.productID}</td>
-                                <td>{product.productName}</td>
-                                <td>{product.price}</td>
-                                <td>{product.description}</td>
-                                <td>{product.categoryID}</td>
-                            </tr>
+            <div className="col-md-3"></div>
+            <div className="col-md-6" >
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>ProductName</th>
+                            <th>ID</th>
+                            <th>Price</th>
+                            <th>Des</th>
+                            <th>Cate</th>
+                            <th>Image</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            productList.map(product =>
+                                <tr>
+                                    <td>{product.productID}</td>
+                                    <td>{product.productName}</td>
+                                    <td>{product.price}</td>
+                                    <td>{product.description}</td>
+                                    <td>{product.categoryID}</td>
+                                    <td>{product.image}</td>
+                                </tr>
                             )
-                    }
-                </tbody>
-            </Table>
-            <Button color="danger" onClick={btnCreate}>Create Product</Button>
-        </div>
-        <div className="col-md-3"></div>
+                        }
+                    </tbody>
+                </Table>
+                <Button color="danger" onClick={btnCreate}>Create Product</Button>
+            </div>
+            <div className="col-md-3"></div>
         </div>
     );
 }

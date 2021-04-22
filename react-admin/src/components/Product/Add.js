@@ -3,9 +3,11 @@ import { FormGroup, Label, Input, Button, } from 'reactstrap'
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios'
 function Add() {
+
+    const imgDefault='/img/noImage.jpg'
     const history = useHistory()
     const [addProduct, setAddProduct] = useState({
-        Name: '', Price: 0, Description: '', CategoryID: 0, RatingAVG: 0, Image: null
+        Name: '', Price: 0, Description: '', CategoryID: 0, RatingAVG: 0, Image: '', ImageFile: null
     })
     const add = (e) => {
         e.preventDefault()
@@ -16,10 +18,34 @@ function Add() {
         formData.append('RatingAVG', parseFloat(addProduct.RatingAVG))
         formData.append('CategoryID', parseInt(addProduct.CategoryID))
         formData.append('Image', addProduct.Image)
+        formData.append('ImageFile', addProduct.ImageFile)
         console.log(formData)
         console.log(formData)
         axios.post("https://localhost:5001/api/products", formData).then(history.push('/product'))
     }
+
+    const showPreview = e => {
+        if (e.target.files && e.target.files[0]) {
+            let imageFile = e.target.files[0];
+            const reader = new FileReader();
+            reader.onload = x => {
+                setAddProduct({
+                    ...addProduct,
+                    ImageFile: imageFile,
+                    ImageSrc: x.target.result
+                })
+            };
+            reader.readAsDataURL(imageFile)
+        }
+        else {
+            setAddProduct({
+                ...addProduct,
+                ImageFile: null,
+                ImageSrc: imgDefault
+            })
+        }
+    }
+
     const onChange = e => {
         const { name, value } = e.target
         setAddProduct({ ...addProduct, [name]: value })
@@ -45,6 +71,11 @@ function Add() {
                     <FormGroup>
                         <Label>Product Category</Label>
                         <Input name="CategoryID" type="number" placeholder="Enter CategoryID " onChange={onChange}></Input>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label>Product Image</Label>
+                        <Input name="ImageFile" type="file" accept="image/*" onChange={showPreview}></Input>
+                        <img src="{addProduct.ImageSrc}"></img>
                     </FormGroup>
                     <Button type="submit" className="btn btn-primary">
                         Submit
