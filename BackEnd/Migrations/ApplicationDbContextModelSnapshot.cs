@@ -99,12 +99,17 @@ namespace BackEnd.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ProductID")
+                        .HasColumnType("int");
+
                     b.Property<string>("ShoppingCartID")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ShoppingCartItemID");
 
-                    b.ToTable("ShoppingCartITem");
+                    b.HasIndex("ProductID");
+
+                    b.ToTable("ShoppingCartItems");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -341,6 +346,15 @@ namespace BackEnd.Migrations
                         .HasForeignKey("ProductID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.ShoppingCartItem", b =>
+                {
+                    b.HasOne("BackEnd.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductID");
 
                     b.Navigation("Product");
                 });
