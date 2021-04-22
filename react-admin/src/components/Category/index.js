@@ -13,9 +13,9 @@ function Index() {
     
     const [categoryList, setCategoryList] = useState([])
     useEffect(() => {
-        axios.get("https://localhost:5001/api/categories").then(response => {
+        axios.get("https://slash1999.azurewebsites.net/api/categories").then(response => {
             setCategoryList(response.data)
-            console.log("List")
+            console.log(    "List")
             console.log(categoryList)
         }
 
@@ -36,7 +36,7 @@ function Index() {
                         {
                             categoryList.map(category =>
                                 <tr>
-                                    <td>{category.categoryName}</td>
+                                    <td>{category.name}</td>
 
                                 </tr>
                             )

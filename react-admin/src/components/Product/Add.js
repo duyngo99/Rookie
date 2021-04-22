@@ -5,20 +5,21 @@ import axios from 'axios'
 function Add() {
     const history = useHistory()
     const [addProduct, setAddProduct] = useState({
-        Name: '', Price: 0, Description: '', CategoryID: 0, RatingAVG: 0,
+        Name: '', Price: 0, Description: '', CategoryID: 0, RatingAVG: 0, Image: null
     })
-    const add = () => {
-        // e.preventDefault()
-        // const formData = new FormData()
-        // formData.append('ProductName',addProduct.productName)
-        // formData.append('Price',parseFloat( addProduct.price))
-        // formData.append('Description',addProduct.description)
-        // formData.append('RatingAVG',parseFloat  (addProduct.ratingAVG))
-        // formData.append('CategoryID',parseInt(addProduct.categoryID))
-        addProduct.Price = parseFloat(addProduct.Price)
-        addProduct.CategoryID = parseFloat(addProduct.CategoryID)
-        console.log(addProduct)
-        axios.post("https://localhost:5001/api/products", addProduct).then(history.push('/product'))
+    const add = (e) => {
+        e.preventDefault()
+        const formData = new FormData()
+        formData.append('Name', addProduct.Name)
+        formData.append('Price', parseFloat(addProduct.Price))
+        formData.append('Description', addProduct.Description)
+        formData.append('RatingAVG', parseFloat(addProduct.RatingAVG))
+        formData.append('CategoryID', parseInt(addProduct.CategoryID))
+        formData.append('Image', addProduct.Image)
+        // addProduct.Price = parseFloat(addProduct.Price)
+        // addProduct.CategoryID = parseFloat(addProduct.CategoryID)
+        console.log(formData)
+        axios.post("https://localhost:5001/api/products", formData).then(history.push('/product'))
     }
     const onChange = e => {
         const { name, value } = e.target

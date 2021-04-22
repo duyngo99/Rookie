@@ -57,14 +57,15 @@ namespace BackEnd.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<ProductVm>> CreateProduct([FromBody] ProductFormVm model){
+        public async Task<ActionResult<ProductVm>> CreateProduct([FromForm] ProductFormVm model){
             var product = new Product {
                 
                 ProductName = model.Name,
                 Description = model.Description,
                 Price = model.Price,
                 CategoryID = model.CategoryID,
-                RatingAverage = model.RatingAVG
+                RatingAverage = model.RatingAVG,
+                ProductImage=model.Image
                 
             };
             _dataContext.Products.Add(product);

@@ -13,12 +13,11 @@ function Index() {
     }
     const [productList, setProductList] = useState([])
     useEffect(() => {
-        axios.get("https://localhost:5001/api/products").then(response => {
+        axios.get("https://slash1999.azurewebsites.net/api/products").then(response => {
             setProductList(response.data)
             console.log("List")
             console.log(productList)
         }
-
         )
     },[])
     return (
@@ -39,8 +38,8 @@ function Index() {
                     {
                         productList.map(product=>
                             <tr>
-                                <td>{product.productName}</td>
                                 <td>{product.productID}</td>
+                                <td>{product.productName}</td>
                                 <td>{product.price}</td>
                                 <td>{product.description}</td>
                                 <td>{product.categoryID}</td>

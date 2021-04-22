@@ -44,13 +44,13 @@ namespace BackEnd.Controllers
         }
         
         [HttpPost]
-        public async Task<ActionResult<CategoryVm>> CreateCategory(CategoryFormVm model){
+        public async Task<ActionResult<CategoryVm>> CreateCategory([FromForm] CategoryFormVm model){
             var category = new Category {
                 CategoryName = model.Name
             };
             _dataContext.Categories.Add(category);
             await _dataContext.SaveChangesAsync();
-            return CreatedAtAction("Get Product",new {id = category.CategoryID}, new CategoryVm{CategoryID = category.CategoryID,Name = category.CategoryName });
+            return Accepted();
         }
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateCategory(int id, CategoryFormVm model){

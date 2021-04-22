@@ -4,21 +4,12 @@ import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios'
 function Add() {
     const history = useHistory()
-    const [addCategory, setAddCategory] = useState({
-        Name: '', Price: 0, Description: '', CategoryID: 0, RatingAVG: 0,
-    })
-    const add = () => {
-        // e.preventDefault()
-        // const formData = new FormData()
-        // formData.append('ProductName',addProduct.productName)
-        // formData.append('Price',parseFloat( addProduct.price))
-        // formData.append('Description',addProduct.description)
-        // formData.append('RatingAVG',parseFloat  (addProduct.ratingAVG))
-        // formData.append('CategoryID',parseInt(addProduct.categoryID))
-        addCategory.Price = parseFloat(addCategory.Price)
-        addCategory.CategoryID = parseFloat(addCategory.CategoryID)
-        console.log(addCategory)
-        axios.post("https://localhost:5001/api/products", addCategory).then(history.push('/product'))
+    const [addCategory, setAddCategory] = useState({Name: ''})
+    const add = (e) => {
+        e.preventDefault()
+        const formData=new FormData()
+        formData.append("Name",addCategory.Name)
+        axios.post("https://localhost:5001/api/categories", formData).then(history.push('/category'))
     }
     const onChange = e => {
         const { name, value } = e.target
