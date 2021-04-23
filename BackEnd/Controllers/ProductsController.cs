@@ -33,7 +33,7 @@ namespace BackEnd.Controllers
         {
             string imageName = new String(Path.GetFileNameWithoutExtension(imageFile.FileName).Take(10).ToArray()).Replace(' ', '-');
             imageName = imageName + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(imageFile.FileName);
-            var imagePath = Path.Combine(_hostEnvironment.ContentRootPath, "image", imageName);
+            var imagePath = Path.Combine(_hostEnvironment.ContentRootPath, "wwwroot/image", imageName);
             using (var fileStream = new FileStream(imagePath, FileMode.Create))
             {
                 await imageFile.CopyToAsync(fileStream);
@@ -85,9 +85,13 @@ namespace BackEnd.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<ProductVm>> CreateProduct([FromForm] ProductFormVm model)
+        [AllowAnonymous]
+        public async Task<ActionResult> CreateProduct([FromForm] ProductFormVm model)
         {
-            model.Image = await SaveImage(model.ImageFile);
+            if(model.ImageFile!=null)
+            {
+                model.Image = await SaveImage(model.ImageFile);
+            }
             var product = new Product
             {
 
@@ -101,7 +105,7 @@ namespace BackEnd.Controllers
             };
             _dataContext.Products.Add(product);
             await _dataContext.SaveChangesAsync();
-            return Accepted();
+            return StatusCode(201);
         }
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateProduct(int id, ProductFormVm model)

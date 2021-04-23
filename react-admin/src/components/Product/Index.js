@@ -44,7 +44,7 @@ function Index() {
                                     <td>{product.price}</td>
                                     <td>{product.description}</td>
                                     <td>{product.categoryID}</td>
-                                    <td>{product.image}</td>
+                                    <td><img src={`https://localhost:5001/image/${product.image}`}></img></td>
                                 </tr>
                             )
                         }

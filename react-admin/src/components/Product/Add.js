@@ -7,7 +7,7 @@ function Add() {
     const imgDefault='/img/noImage.jpg'
     const history = useHistory()
     const [addProduct, setAddProduct] = useState({
-        Name: '', Price: 0, Description: '', CategoryID: 0, RatingAVG: 0, Image: '', ImageFile: null
+        Name: '', Price: 0, Description: '', CategoryID: 0, RatingAVG: 0, Image: '', ImageFile: null,ImageSrc:''
     })
     const add = (e) => {
         e.preventDefault()
@@ -15,12 +15,11 @@ function Add() {
         formData.append('Name', addProduct.Name)
         formData.append('Price', parseFloat(addProduct.Price))
         formData.append('Description', addProduct.Description)
-        formData.append('RatingAVG', parseFloat(addProduct.RatingAVG))
+        formData.append('RatingAVG', addProduct.RatingAVG)
         formData.append('CategoryID', parseInt(addProduct.CategoryID))
         formData.append('Image', addProduct.Image)
         formData.append('ImageFile', addProduct.ImageFile)
-        console.log(formData)
-        console.log(formData)
+        console.log(addProduct)
         axios.post("https://localhost:5001/api/products", formData).then(history.push('/product'))
     }
 
@@ -70,12 +69,12 @@ function Add() {
                     </FormGroup>
                     <FormGroup>
                         <Label>Product Category</Label>
-                        <Input name="CategoryID" type="number" placeholder="Enter CategoryID " onChange={onChange}></Input>
+                        <Input name="CategoryID" type="text" placeholder="Enter CategoryID " onChange={onChange}></Input>
                     </FormGroup>
                     <FormGroup>
                         <Label>Product Image</Label>
-                        <Input name="ImageFile" type="file" accept="image/*" onChange={showPreview}></Input>
-                        <img src="{addProduct.ImageSrc}"></img>
+                        <Input type="file" accept="image/*" onChange={showPreview}></Input>
+                        <img src={addProduct.ImageSrc}></img>
                     </FormGroup>
                     <Button type="submit" className="btn btn-primary">
                         Submit
