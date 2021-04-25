@@ -41,7 +41,7 @@ namespace CustomerSite
                 .AddCookie("Cookies")
                 .AddOpenIdConnect("oidc", options =>
                 {
-                    options.Authority = "http://slash1999.azurewebsites.net";
+                    options.Authority = Configuration["local:BackEnd"];
                     options.RequireHttpsMetadata = false;
                     options.GetClaimsFromUserInfoEndpoint = true;
 

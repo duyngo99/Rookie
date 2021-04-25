@@ -34,6 +34,30 @@ namespace BackEnd.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("BackEnd.Models.Order", b =>
+                {
+                    b.Property<int>("OrderID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OrderID");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("BackEnd.Models.Product", b =>
                 {
                     b.Property<int>("ProductID")

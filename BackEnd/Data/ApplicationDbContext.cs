@@ -19,6 +19,7 @@ namespace BackEnd.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Rating> Rating { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
-        
+        public DbSet<Order> Orders { get; set; }
+
     }
 }

@@ -10,6 +10,7 @@ namespace BackEnd.Models
 
         public User(string userName) : base(userName)
         {
+            
         }
 
         [PersonalData]

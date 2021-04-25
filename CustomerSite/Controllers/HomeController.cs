@@ -37,6 +37,7 @@ namespace CustomerSite.Controllers
             await _productApiClient.PuttRatingProduct(id,productFormVm);
             var products = await _productApiClient.GetProductById(id);
             return View(products);
+            
 
         }
 

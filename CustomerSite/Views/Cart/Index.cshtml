@@ -12,6 +12,8 @@
                   <th>Quantity</th>
                   <th class="text-center">Price</th>
                   <th class="text-center">Total</th>
+                  <th class="text-center">Function</th>
+
                 </tr>
               </thead>
               @if (ViewBag.cart != null)
@@ -19,12 +21,6 @@
                 <tbody>
                   @foreach (var item in ViewBag.cart)
                   {
-                    var imgSrc = "~/images/noImage.jpg";
-                    if (item.Product.Image != null)
-                    {
-                      var base64 = Convert.ToBase64String(item.Product.Image);
-                      imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                    }
                     <tr>
                       <td><a class="remove" asp-controller="Cart" asp-action="Remove"
                       asp-route-id="@item.Product.ProductID">
@@ -32,7 +28,8 @@
                         </a></td>
                       <td class>
                         <div class="media"><a class="thumbnail pull-left" asp-action="Detail" asp-controller="Home"
-                        asp-route-id='@item.Product.ProductID'> <img src="@imgSrc" width="300px"></a>
+                        asp-route-id='@item.Product.ProductID'> <img
+                          src="https://localhost:5001/image/@item.Product.Image" width="300px"></a>
                           <div class="media-body">
                             <h4 class="media-heading"><a asp-action="Detail" asp-controller="Home"
                             asp-route-id='@item.Product.ProductID'>@item.Product.ProductName</a></h4>

@@ -53,7 +53,7 @@ namespace BackEnd.Controllers
             return Accepted();
         }
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateCategory(int id, CategoryFormVm model){
+        public async Task<ActionResult> UpdateCategory(int id,[FromForm] CategoryFormVm model){
             var category = await _dataContext.Categories.FirstOrDefaultAsync(x => x.CategoryID == id);
             if (category == null){
                 return NotFound();

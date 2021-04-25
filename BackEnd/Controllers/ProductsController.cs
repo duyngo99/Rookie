@@ -82,13 +82,11 @@ namespace BackEnd.Controllers
             };
             return product;
         }
-
-
         [HttpPost]
         [AllowAnonymous]
         public async Task<ActionResult> CreateProduct([FromForm] ProductFormVm model)
         {
-            if(model.ImageFile!=null)
+            if (model.ImageFile != null)
             {
                 model.Image = await SaveImage(model.ImageFile);
             }
@@ -108,8 +106,12 @@ namespace BackEnd.Controllers
             return StatusCode(201);
         }
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateProduct(int id, ProductFormVm model)
+        public async Task<ActionResult> UpdateProduct(int id, [FromForm] ProductFormVm model)
         {
+            if (model.ImageFile != null)
+            {
+                model.Image = await SaveImage(model.ImageFile);
+            }
             var product = await _dataContext.Products.FirstOrDefaultAsync(x => x.ProductID == id);
             if (product == null)
             {
@@ -120,6 +122,8 @@ namespace BackEnd.Controllers
             product.Price = model.Price;
             product.CategoryID = model.CategoryID;
             product.RatingAverage = model.RatingAVG;
+            product.ProductImage = model.Image;
+
             await _dataContext.SaveChangesAsync();
             return NotFound();
         }
