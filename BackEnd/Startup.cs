@@ -37,6 +37,8 @@ namespace BackEnd
             {
                 ["CustomerSite"] = Configuration["ClientUrl:CustomerSite"],
                 ["Backend"] = Configuration["ClientUrl:Backend"],
+                ["localHostCustomerSite"] = Configuration["localhost:CustomerSite"],
+                ["localHostBackEnd"] = Configuration["localhost:BackEnd"]
             };
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
@@ -127,9 +129,8 @@ namespace BackEnd
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             // app.UseCors(options => options.WithOrigins(clientUrls["CustomerSite"]).AllowAnyMethod().AllowAnyHeader());
-            app.UseCors(options => options.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+            app.UseCors(options => options.WithOrigins("http://localhost:3002").AllowAnyMethod().AllowAnyHeader());
             app.UseRouting();
-
             app.UseIdentityServer();
             app.UseAuthorization();
 

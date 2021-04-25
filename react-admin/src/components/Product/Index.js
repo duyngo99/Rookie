@@ -6,14 +6,23 @@ import { Button, Table } from 'reactstrap'
 
 
 function Index() {
-
+    const [productList, setProductList] = useState([])
     const history = useHistory()
     const btnCreate = () => {
         history.push("/product/add")
     }
-    const [productList, setProductList] = useState([])
+
+    const btnDelete = (id) => {
+        // axios.delete(process.env.REACT_APP_LOCAL_PRODUCT + `/` + id).then(setProductList(productList.filter(x => x.productID != id)))
+        axios.delete(process.env.REACT_APP_LOCAL_PRODUCT + '/' + id).then(setProductList(productList.filter(x => x.productID != id)))
+    }
+
+    const btnUpdate = (id) => {
+        history.push('/product/update/' + id)
+    }
+
     useEffect(() => {
-        axios.get("https://slash1999.azurewebsites.net/api/products").then(response => {
+        axios.get(process.env.REACT_APP_LOCAL_PRODUCT).then(response => {
             setProductList(response.data)
             console.log("List")
             console.log(productList)
@@ -22,17 +31,18 @@ function Index() {
     }, [])
     return (
         <div className="row">
-            <div className="col-md-3"></div>
-            <div className="col-md-6" >
+            <div className="col-md-2"></div>
+            <div className="col-md-8" >
                 <Table>
                     <thead>
                         <tr>
+                            <th>ProductID</th>
                             <th>ProductName</th>
-                            <th>ID</th>
                             <th>Price</th>
-                            <th>Des</th>
-                            <th>Cate</th>
+                            <th>Description</th>
+                            <th>Category</th>
                             <th>Image</th>
+                            <th>Function</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,15 +54,18 @@ function Index() {
                                     <td>{product.price}</td>
                                     <td>{product.description}</td>
                                     <td>{product.categoryID}</td>
-                                    <td><img src={`https://localhost:5001/image/${product.image}`}></img></td>
+                                    <td><img src={process.env.REACT_APP_LOCAL_IMAGE + product.image} width="100px"></img></td>
+                                    <Button onClick={() => btnDelete(product.productID)} color="danger">Delete</Button>
+                                    <Button onClick={() => btnUpdate(product.productID)} color="success">Update</Button>
                                 </tr>
                             )
                         }
                     </tbody>
                 </Table>
                 <Button color="danger" onClick={btnCreate}>Create Product</Button>
+
             </div>
-            <div className="col-md-3"></div>
+            <div className="col-md-2"></div>
         </div>
     );
 }

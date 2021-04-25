@@ -4,12 +4,14 @@ import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios'
 function Add() {
     const history = useHistory()
-    const [addCategory, setAddCategory] = useState({Name: ''})
+    const [addCategory, setAddCategory] = useState({ Name: '' })
     const add = (e) => {
         e.preventDefault()
-        const formData=new FormData()
-        formData.append("Name",addCategory.Name)
-        axios.post("https://localhost:5001/api/categories", formData).then(history.push('/category'))
+        const formData = new FormData()
+        formData.append("Name", addCategory.Name)
+        console.log(process.env.REACT_APP_LOCAL_CATEGORY)
+        axios.post(process.env.REACT_APP_LOCAL_CATEGORY, formData).then(window.location.href = "/category")
+        // axios.post(process.env.REACT_LOCAL_CATEGORY, formData).then(history.push('/category'))
     }
     const onChange = e => {
         const { name, value } = e.target
@@ -23,7 +25,7 @@ function Add() {
                 <form autoComplete="off" noValidate onSubmit={add}>
                     <FormGroup >
                         <Label>Category Name</Label>
-                        <Input name="Name" type="text" placeholder="Enter Product Name " onChange={onChange}></Input>
+                        <Input name="Name" type="text" placeholder="Enter Category Name " onChange={onChange}></Input>
                     </FormGroup>
                     <Button type="submit" className="btn btn-primary">
                         Submit

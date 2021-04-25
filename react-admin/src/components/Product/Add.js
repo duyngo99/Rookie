@@ -4,10 +4,10 @@ import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios'
 function Add() {
 
-    const imgDefault='/img/noImage.jpg'
+    const imgDefault = '/img/noImage.jpg'
     const history = useHistory()
     const [addProduct, setAddProduct] = useState({
-        Name: '', Price: 0, Description: '', CategoryID: 0, RatingAVG: 0, Image: '', ImageFile: null,ImageSrc:''
+        Name: '', Price: 0, Description: '', CategoryID: 0, RatingAVG: 0, Image: '', ImageFile: null, ImageSrc: ''
     })
     const add = (e) => {
         e.preventDefault()
@@ -20,7 +20,7 @@ function Add() {
         formData.append('Image', addProduct.Image)
         formData.append('ImageFile', addProduct.ImageFile)
         console.log(addProduct)
-        axios.post("https://localhost:5001/api/products", formData).then(history.push('/product'))
+        axios.post(process.env.REACT_APP_LOCAL_PRODUCT, formData).then(window.location.href = "/product")
     }
 
     const showPreview = e => {
@@ -52,8 +52,8 @@ function Add() {
     return (
 
         <div className="row">
-            <div className="col-md-3"></div>
-            <div className="col-md-6">
+            <div className="col-md-1"></div>
+            <div className="col-md-10">
                 <form autoComplete="off" noValidate onSubmit={add}>
                     <FormGroup >
                         <Label>Product Name</Label>
@@ -69,12 +69,12 @@ function Add() {
                     </FormGroup>
                     <FormGroup>
                         <Label>Product Category</Label>
-                        <Input name="CategoryID" type="text" placeholder="Enter CategoryID " onChange={onChange}></Input>
+                        <Input name="CategoryID" type="" placeholder="Enter CategoryID " onChange={onChange}></Input>
                     </FormGroup>
                     <FormGroup>
                         <Label>Product Image</Label>
                         <Input type="file" accept="image/*" onChange={showPreview}></Input>
-                        <img src={addProduct.ImageSrc}></img>
+                        <img src={addProduct.ImageSrc} width="100px"></img>
                     </FormGroup>
                     <Button type="submit" className="btn btn-primary">
                         Submit
@@ -82,7 +82,7 @@ function Add() {
                     <Link to={"/product"}><Button className="btn btn-danger">Cancel</Button></Link>
                 </form>
             </div>
-            <div className="col-md-3"></div>
+            <div className="col-md-1"></div>
         </div>
 
     )

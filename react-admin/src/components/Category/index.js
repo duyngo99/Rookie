@@ -5,28 +5,31 @@ import { Table, Button } from 'reactstrap'
 
 
 function Index() {
-    
+    const [categoryList, setCategoryList] = useState([])
     const history = useHistory()
     const btnCreate = () => {
         history.push("/category/add")
     }
-    
-    const [categoryList, setCategoryList] = useState([])
-    useEffect(() => {
-        axios.get("https://slash1999.azurewebsites.net/api/categories").then(response => {
-            setCategoryList(response.data)
-            console.log(    "List")
-            console.log(categoryList)
-        }
 
-        )
+    const btnDelete = (id) => {
+        axios.delete(process.env.REACT_APP_LOCAL_CATEGORY + `/` + id).then(setCategoryList(categoryList.filter(x => x.categoryID != id)))
+    }
+
+    const btnUpdate = (id) => {
+        history.push('/category/update/' + id)
+    }
+
+    useEffect(() => {
+        axios.get(process.env.REACT_APP_LOCAL_CATEGORY).then(response => {
+            setCategoryList(response.data)
+        })
     }, [])
 
     return (
-        <div className="row">
-            <div className="col-md-2"></div>
-            <div className="col-md-8" >
-                <Table>
+        <div style={{display:"flex", flexDirection:"row", flexWrap:"wrap", justifyContent:'center'}}> 
+        <div className="col-md-1"></div>
+        <div  className="col-md-10" >
+                <Table >
                     <thead>
                         <tr>
                             <th>CategoryName</th>
@@ -37,15 +40,18 @@ function Index() {
                             categoryList.map(category =>
                                 <tr>
                                     <td>{category.name}</td>
+                                    <Button onClick={() => btnDelete(category.categoryID)} color="danger">Delete</Button>
+                                    <Button onClick={() => btnUpdate(category.categoryID)} color="success">Update</Button>
 
                                 </tr>
                             )
                         }
                     </tbody>
                 </Table>
-                <Button color="danger" onClick={btnCreate}>Create Category</Button>
-            </div>
-            <div className="col-md-2"></div>
+                <Button color="danger" onClick={btnCreate} >Create Category</Button>
+                
+        </div>
+        <div className="col-md-1"></div>
         </div>
     );
 }
