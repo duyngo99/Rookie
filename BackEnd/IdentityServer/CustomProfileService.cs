@@ -25,7 +25,6 @@ namespace BackEnd.IdentityServer
             _logger = logger;
             _userManager = userManager;
         }
-
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
             var sub = context.Subject?.GetSubjectId();

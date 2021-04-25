@@ -19,7 +19,7 @@ namespace BackEnd.IdentityServer
                   new ApiScope("rookieshop.api", "Rookie API")
              };
 
-        public static IEnumerable<Client> Clients(Dictionary<string, string> clientUrls) =>
+        public static IEnumerable<Client> Clients(Dictionary<string, string> localhost) =>
             new List<Client>
             {
                 // machine to machine client
@@ -41,9 +41,9 @@ namespace BackEnd.IdentityServer
 
                     AllowedGrantTypes = GrantTypes.Code,
 
-                    RedirectUris = { $"{clientUrls["CustomerSite"]}/signin-oidc"},
+                    RedirectUris = { $"{localhost["CustomerSite"]}/signin-oidc"},
 
-                    PostLogoutRedirectUris = { $"{clientUrls["CustomerSite"]}/signout-callback-oidc" },
+                    PostLogoutRedirectUris = { $"{localhost["CustomerSite"]}/signout-callback-oidc" },
 
                     AllowedScopes = new List<string>
                     {
@@ -62,9 +62,9 @@ namespace BackEnd.IdentityServer
                     RequireConsent = false,
                     RequirePkce = true,
 
-                    RedirectUris =           { $"{clientUrls["Backend"]}/swagger/oauth2-redirect.html" },
-                    PostLogoutRedirectUris = { $"{clientUrls["Backend"]}/swagger/oauth2-redirect.html" },
-                    AllowedCorsOrigins =     { $"{clientUrls["Backend"]}"},
+                    RedirectUris =           { $"{localhost["Backend"]}/swagger/oauth2-redirect.html" },
+                    PostLogoutRedirectUris = { $"{localhost["Backend"]}/swagger/oauth2-redirect.html" },
+                    AllowedCorsOrigins =     { $"{localhost["Backend"]}"},
 
                     AllowedScopes = new List<string>
                     {

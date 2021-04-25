@@ -1,5 +1,7 @@
 @{
 
+
+
     ViewData["Title"] = "EditRole";
 }
 @model BackEnd.ViewModel.EditRoleViewModel
@@ -37,10 +39,16 @@
             @if (Model.Users.Any())
             {
 
+
+
                 foreach (var user in Model.Users)
+
+
 
                 {
                     <h5 class="card-title">@user</h5>
+
+
 
                 }
             }
@@ -48,10 +56,12 @@
             {
                 <h5 class="card-title">No one</h5>
 
+
+
             }
         </div>
         <div class="card-footer">
-            <a asp-action="EditUsersInRole" asp-controller="Account" asp-route-roleId="@Model.ID"
+            <a asp-action="EditUsersInRole" asp-controller="RoleManager" asp-route-roleId="@Model.ID"
                 class="btn btn-primary" style="width:auto">Add or remove user</a>
 
         </div>
