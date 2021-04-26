@@ -13,7 +13,7 @@ function Add() {
     const [categoryList, setCategoryList] = useState([])
     useEffect(() => {
         axios.get(process.env.REACT_APP_LOCAL_CATEGORY).then(response => {
-            setCategoryList(response.data)
+            setCategoryList(response.data)  
         })
     }, [])
     var option=[]

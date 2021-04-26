@@ -27,6 +27,9 @@ export default function Header(props) {
   const btnUser = () => {
     history.push('/user/')
   }
+  const btnSignin = () => {
+    history.push('/login/')
+  }
 
   return (
     <div>
@@ -43,6 +46,9 @@ export default function Header(props) {
             </NavItem>
             <NavItem>
               <NavLink><Button onClick={btnUser} color="primary">User</Button></NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink><Button onClick={btnSignin} color="primary">Signin</Button></NavLink>
             </NavItem>
           </Nav>
         </Collapse>

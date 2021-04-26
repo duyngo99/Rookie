@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using BackEnd.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace BackEnd.ViewModel
 {
-    public class EditRoleViewModel
+    public class EditRoleViewModel : IdentityRole
     {
         public EditRoleViewModel()
         {
