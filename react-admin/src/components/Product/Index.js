@@ -6,6 +6,12 @@ import { Button, Table } from 'reactstrap'
 
 
 function Index() {
+    const [categoryList, setCategoryList] = useState([])
+    useEffect(() => {
+        axios.get(process.env.REACT_APP_LOCAL_CATEGORY).then(response => {
+            setCategoryList(response.data)
+        })
+    },[])
     const [productList, setProductList] = useState([])
     const history = useHistory()
     const btnCreate = () => {
@@ -26,13 +32,8 @@ function Index() {
             setProductList(response.data)
         }
         )
-    }, [])
-    const [categoryList, setCategoryList] = useState([])
-    useEffect(() => {
-        axios.get(process.env.REACT_APP_LOCAL_CATEGORY).then(response => {
-            setCategoryList(response.data)
-        })
-    }, [])
+    },[])
+    
     return (
         <div className="row">
             <div className="col-md-2"></div>
@@ -53,15 +54,14 @@ function Index() {
                         {
                             productList.map(product =>
                                 <tr>
-                               
                                     <td>{product.productID}</td>    
                                     <td>{product.productName}</td>
-                                    <td>{product.price}</td>
+                                    <td>{product.price}</td>    
                                     <td>{product.description}</td>
-                                    <td>{categoryList.find(x=>x.categoryID==product.categoryID).name}</td>
+                                    <td>{categoryList.find(x=>x.categoryID==product.categoryID) != undefined?categoryList.find(x=>x.categoryID==product.categoryID).name:''}</td>
                                     <td><img src={process.env.REACT_APP_LOCAL_IMAGE + product.image} width="100px"></img></td>
                                     <Button onClick={() => btnDelete(product.productID)} color="danger">Delete</Button>
-                                    <Button onClick={() => btnUpdate(product.productID)} color="success">Update</Button>
+                                    <Button onClick={() => btnUpdate(product.productID)} color="success">Update</Button>                               
                                 </tr>
                             )
                         }

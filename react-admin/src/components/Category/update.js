@@ -4,24 +4,24 @@ import { Link, useHistory, useParams } from 'react-router-dom';
 import axios from 'axios'
 function Update() {
     const history = useHistory()
-    const [addCategory, setAddCategory] = useState({ Name: '' })
+    const [updateCategory, setUpdateCategory] = useState({ Name: '' })
     let { id } = useParams()
-    const add = (e) => {
+    const update = (e) => {
         e.preventDefault()
         const formData = new FormData()
-        formData.append("Name", addCategory.Name)
+        formData.append("Name", updateCategory.Name)
         axios.put(process.env.REACT_APP_LOCAL_CATEGORY + `/` + id, formData).then(window.location.href = "/category")
     }
     const onChange = e => {
         const { name, value } = e.target
-        setAddCategory({ ...addCategory, [name]: value })
+        setUpdateCategory({ ...updateCategory, [name]: value })
     }
     return (
 
         <div className="row">
             <div className="col-md-3"></div>
             <div className="col-md-6">
-                <form autoComplete="off" noValidate onSubmit={add}>
+                <form autoComplete="off" noValidate onSubmit={update}>
                     <FormGroup >
                         <Label>Category Name</Label>
                         <Input name="Name" type="text" placeholder="Enter Product Name " onChange={onChange}></Input>

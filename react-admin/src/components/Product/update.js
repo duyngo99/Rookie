@@ -5,26 +5,26 @@ import axios from 'axios'
 function Update() {
     const imgDefault = '/img/noImage.jpg'
     const history = useHistory()
-    const [addProduct, setAddProduct] = useState({
+    const [updateProduct, setUpdateProduct] = useState({
         Name: '', Price: 0, Description: '', CategoryID: 0, RatingAVG: 0, Image: '', ImageFile: null, ImageSrc: ''
     })
     let { id } = useParams()
     const update = (e) => {
         e.preventDefault()
         const formData = new FormData()
-        formData.append('Name', addProduct.Name)
-        formData.append('Price', parseFloat(addProduct.Price))
-        formData.append('Description', addProduct.Description)
-        formData.append('RatingAVG', addProduct.RatingAVG)
-        formData.append('CategoryID', parseInt(addProduct.CategoryID))
-        formData.append('Image', addProduct.Image)
-        formData.append('ImageFile', addProduct.ImageFile)
-        console.log(addProduct)
+        formData.append('Name', updateProduct.Name)
+        formData.append('Price', parseFloat(updateProduct.Price))
+        formData.append('Description', updateProduct.Description)
+        formData.append('RatingAVG', updateProduct.RatingAVG)
+        formData.append('CategoryID', parseInt(updateProduct.CategoryID))
+        formData.append('Image', updateProduct.Image)
+        formData.append('ImageFile', updateProduct.ImageFile)
+        console.log(updateProduct)
         axios.put(process.env.REACT_APP_LOCAL_PRODUCT + `/` + id, formData).then(window.location.href = "/product")
     }
     const onChange = e => {
         const { name, value } = e.target
-        setAddProduct({ ...addProduct, [name]: value })
+        setUpdateProduct({ ...updateProduct, [name]: value })
     }
 
     const showPreview = e => {
@@ -32,8 +32,8 @@ function Update() {
             let imageFile = e.target.files[0];
             const reader = new FileReader();
             reader.onload = x => {
-                setAddProduct({
-                    ...addProduct,
+                setUpdateProduct({
+                    ...updateProduct,
                     ImageFile: imageFile,
                     ImageSrc: x.target.result
                 })
@@ -41,8 +41,8 @@ function Update() {
             reader.readAsDataURL(imageFile)
         }
         else {
-            setAddProduct({
-                ...addProduct,
+            setUpdateProduct({
+                ...updateProduct,
                 ImageFile: null,
                 ImageSrc: imgDefault
             })
@@ -74,7 +74,7 @@ function Update() {
                     <FormGroup>
                         <Label>Product Image</Label>
                         <Input type="file" accept="image/*" onChange={showPreview}></Input>
-                        <img src={addProduct.ImageSrc} width="100px"></img>
+                        <img src={updateProduct.ImageSrc} width="100px"></img>
                     </FormGroup>
                     <Button type="submit" className="btn btn-primary">
                         Submit

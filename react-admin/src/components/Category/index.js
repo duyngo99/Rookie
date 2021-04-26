@@ -23,7 +23,7 @@ function Index() {
         axios.get(process.env.REACT_APP_LOCAL_CATEGORY).then(response => {
             setCategoryList(response.data)
         })
-    }, [])
+    },[])
 
     return (
         <div style={{display:"flex", flexDirection:"row", flexWrap:"wrap", justifyContent:'center'}}> 
