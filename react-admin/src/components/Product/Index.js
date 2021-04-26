@@ -24,10 +24,14 @@ function Index() {
     useEffect(() => {
         axios.get(process.env.REACT_APP_LOCAL_PRODUCT).then(response => {
             setProductList(response.data)
-            console.log("List")
-            console.log(productList)
         }
         )
+    }, [])
+    const [categoryList, setCategoryList] = useState([])
+    useEffect(() => {
+        axios.get(process.env.REACT_APP_LOCAL_CATEGORY).then(response => {
+            setCategoryList(response.data)
+        })
     }, [])
     return (
         <div className="row">
@@ -49,11 +53,12 @@ function Index() {
                         {
                             productList.map(product =>
                                 <tr>
-                                    <td>{product.productID}</td>
+                               
+                                    <td>{product.productID}</td>    
                                     <td>{product.productName}</td>
                                     <td>{product.price}</td>
                                     <td>{product.description}</td>
-                                    <td>{product.categoryID}</td>
+                                    <td>{categoryList.find(x=>x.categoryID==product.categoryID).name}</td>
                                     <td><img src={process.env.REACT_APP_LOCAL_IMAGE + product.image} width="100px"></img></td>
                                     <Button onClick={() => btnDelete(product.productID)} color="danger">Delete</Button>
                                     <Button onClick={() => btnUpdate(product.productID)} color="success">Update</Button>
