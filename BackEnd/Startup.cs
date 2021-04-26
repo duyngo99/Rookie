@@ -1,27 +1,29 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
-using BackEnd.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using BackEnd.Models;
+using BackEnd.Data;
 using BackEnd.IdentityServer;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Http;
+using BackEnd.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using API.IdentityServer;
 
 namespace BackEnd
 {
     public class Startup
     {
+          readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -33,22 +35,15 @@ namespace BackEnd
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            clientUrls = new Dictionary<string, string>
-            {
-                ["CustomerSite"] = Configuration["ClientUrl:CustomerSite"],
-                ["Backend"] = Configuration["ClientUrl:Backend"],
-                ["localHostCustomerSite"] = Configuration["localhost:CustomerSite"],
-                ["localHostBackEnd"] = Configuration["localhost:BackEnd"]
-            };
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
+                Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddCors();
+            
             services.AddIdentityServer(options =>
             {
                 options.Events.RaiseErrorEvents = true;
@@ -59,11 +54,11 @@ namespace BackEnd
             })
                .AddInMemoryIdentityResources(IdentityServerConfig.IdentityResources)
                .AddInMemoryApiScopes(IdentityServerConfig.ApiScopes)
-               .AddInMemoryClients(IdentityServerConfig.Clients(clientUrls))
+               .AddInMemoryClients(IdentityServerConfig.Clients)
                .AddAspNetIdentity<User>()
                .AddProfileService<CustomProfileService>()
-               .AddDeveloperSigningCredential(); // not recommended for production - you need to store your key material somewhere secure
-
+               .AddDeveloperSigningCredential();
+            
             services.AddAuthentication()
                 .AddLocalApi("Bearer", option =>
                 {
@@ -78,13 +73,19 @@ namespace BackEnd
                     policy.RequireAuthenticatedUser();
                 });
             });
+            
+            services.AddMvc(options=>{
+                var policy=new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            }).AddXmlSerializerFormatters();
+
+            services.AddCors();
 
             services.AddControllersWithViews();
 
-
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Rookie Shop API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Rookie API", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.OAuth2,
@@ -109,29 +110,32 @@ namespace BackEnd
                     }
                 });
             });
+            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+          // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseDeveloperExceptionPage();
-            app.UseMigrationsEndPoint();
-            // if (env.IsDevelopment())
-            // {
-
-            // }
-            // else
-            // {
-            //     app.UseExceptionHandler("/Home/Error");
-            //     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-            //     app.UseHsts();
-            // }
+           
+          
+              if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
+            app.UseCors(options=>options.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            // app.UseCors(options => options.WithOrigins(clientUrls["CustomerSite"]).AllowAnyMethod().AllowAnyHeader());
-            app.UseCors(options => options.WithOrigins("https://localhost:3001").AllowAnyMethod().AllowAnyHeader());
-            app.UseCors(options => options.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+
             app.UseRouting();
+
             app.UseIdentityServer();
             app.UseAuthorization();
 
@@ -141,7 +145,7 @@ namespace BackEnd
                 c.OAuthClientId("swagger");
                 c.OAuthClientSecret("secret");
                 c.OAuthUsePkce();
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Rookie Shop API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Rookie API V1");
             });
 
             app.UseEndpoints(endpoints =>
@@ -149,7 +153,7 @@ namespace BackEnd
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
+                    endpoints.MapRazorPages();
             });
         }
     }

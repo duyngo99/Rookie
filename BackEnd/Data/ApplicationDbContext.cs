@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BackEnd.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -17,7 +17,6 @@ namespace BackEnd.Data
         }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<Rating> Rating { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
         public DbSet<Order> Orders { get; set; }

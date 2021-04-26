@@ -1,11 +1,13 @@
-using System.Collections.Generic;
 using IdentityServer4;
 using IdentityServer4.Models;
+using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 
-namespace BackEnd.IdentityServer
+namespace API.IdentityServer
 {
     public static class IdentityServerConfig
     {
+
         public static IEnumerable<IdentityResource> IdentityResources =>
             new List<IdentityResource>
             {
@@ -19,7 +21,7 @@ namespace BackEnd.IdentityServer
                   new ApiScope("rookieshop.api", "Rookie API")
              };
 
-        public static IEnumerable<Client> Clients(Dictionary<string, string> localhost) =>
+        public static IEnumerable<Client> Clients =>
             new List<Client>
             {
                 // machine to machine client
@@ -41,9 +43,9 @@ namespace BackEnd.IdentityServer
 
                     AllowedGrantTypes = GrantTypes.Code,
 
-                    RedirectUris = { $"{localhost["CustomerSite"]}/signin-oidc"},
+                    RedirectUris = { "https://localhost:3001/signin-oidc" },
 
-                    PostLogoutRedirectUris = { $"{localhost["CustomerSite"]}/signout-callback-oidc" },
+                    PostLogoutRedirectUris = { "https://localhost:3001/signout-callback-oidc" },
 
                     AllowedScopes = new List<string>
                     {
@@ -52,12 +54,12 @@ namespace BackEnd.IdentityServer
                         "rookieshop.api"
                     }
                 },
-                 new Client
+                new Client
                 {
-                    ClientId = "reactadmin",
+                    ClientId = "react_admin",                  
                     AllowedGrantTypes = GrantTypes.Implicit,
                     RedirectUris = { "http://localhost:3000/signin-oidc" },
-                    PostLogoutRedirectUris = { "http://localhost:3000/signout-oidc" },
+                    // PostLogoutRedirectUris = { "http://localhost:3000/signout-oidc" },
                     AllowedCorsOrigins={"http://localhost:3000"},
                     AllowedScopes = new List<string>
                     {
@@ -68,6 +70,7 @@ namespace BackEnd.IdentityServer
                     AllowAccessTokensViaBrowser=true,
                     RequireConsent=false,
                 },
+
                 new Client
                 {
                     ClientId = "swagger",
@@ -77,9 +80,9 @@ namespace BackEnd.IdentityServer
                     RequireConsent = false,
                     RequirePkce = true,
 
-                    RedirectUris =           { $"{localhost["Backend"]}/swagger/oauth2-redirect.html" },
-                    PostLogoutRedirectUris = { $"{localhost["Backend"]}/swagger/oauth2-redirect.html" },
-                    AllowedCorsOrigins =     { $"{localhost["Backend"]}"},
+                    RedirectUris =           { $"https://localhost:5001/swagger/oauth2-redirect.html" },
+                    PostLogoutRedirectUris = { $"https://localhost:5001/swagger/oauth2-redirect.html" },
+                    AllowedCorsOrigins =     { $"https://localhost:5001" },
 
                     AllowedScopes = new List<string>
                     {
@@ -88,9 +91,6 @@ namespace BackEnd.IdentityServer
                         "rookieshop.api"
                     }
                 },
-
-
-
             };
     }
 }

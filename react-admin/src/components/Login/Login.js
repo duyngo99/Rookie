@@ -2,6 +2,8 @@ import React from 'react'
 
 export default function Login(props) {
     return (
-        props.userManager.signinRedirect()
+        <div>
+            {props.userManager.signinRedirect()}
+        </div>
     )
 }

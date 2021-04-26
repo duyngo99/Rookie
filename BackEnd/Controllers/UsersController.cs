@@ -7,11 +7,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Share;
 
 namespace BackEnd.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize("Bearer")]
     public class UsersController : ControllerBase
     {
 
@@ -23,11 +25,9 @@ namespace BackEnd.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IEnumerable<IdentityUser>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserVm>>> GetUsers()
         {
-            var users = await _dataContext.Users.ToListAsync();
-
-            return users;
+           return await _dataContext.Users.Select(x=>new UserVm{Id=x.Id,Name=x.UserName,Password=x.PasswordHash}).ToListAsync();
         }
     }
 }

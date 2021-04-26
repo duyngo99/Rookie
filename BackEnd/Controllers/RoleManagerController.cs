@@ -25,7 +25,7 @@ namespace BackEnd.Controllers
         }
 
 
-        [Authorize]
+     
         [HttpGet]
         public IActionResult CreateRole()
         {
@@ -55,7 +55,6 @@ namespace BackEnd.Controllers
             return View(model);
         }
 
-        [Authorize]
         public IActionResult ListRoles()
         {
             var roles = roleManager.Roles;
@@ -190,7 +189,7 @@ namespace BackEnd.Controllers
 
             return View(model);
         }
-        [Authorize(Roles = "Admin")]
+      
         [HttpPost]
         public async Task<IActionResult> EditUsersInRole(List<UserRoleViewModel> model, string roleId)
         {
