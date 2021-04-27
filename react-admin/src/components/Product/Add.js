@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FormGroup, Label, Input, Button, } from 'reactstrap'
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios'
@@ -13,14 +13,14 @@ function Add() {
     const [categoryList, setCategoryList] = useState([])
     useEffect(() => {
         axios.get(process.env.REACT_APP_LOCAL_CATEGORY).then(response => {
-            setCategoryList(response.data)  
+            setCategoryList(response.data)
         })
     }, [])
-    var option=[]
-    categoryList.map(x=>option.push({value:x.categoryID,label:x.name}))
+    var option = []
+    categoryList.map(x => option.push({ value: x.categoryID, label: x.name }))
     const add = (e) => {
         e.preventDefault()
-        addProduct.CategoryID=addProduct.CategoryID.value
+        addProduct.CategoryID = addProduct.CategoryID.value
         const formData = new FormData()
         formData.append('Name', addProduct.Name)
         formData.append('Price', parseFloat(addProduct.Price))
@@ -59,10 +59,10 @@ function Add() {
         const { name, value } = e.target
         setAddProduct({ ...addProduct, [name]: value })
     }
-    const onSelect=CategoryID=>{
-        setAddProduct({...addProduct,CategoryID})
+    const onSelect = CategoryID => {
+        setAddProduct({ ...addProduct, CategoryID })
     }
-    const {CategoryID}=addProduct
+    const { CategoryID } = addProduct
     return (
 
         <div className="row">
@@ -86,10 +86,10 @@ function Add() {
                         <Input name="CategoryID" type="" placeholder="Enter CategoryID " onChange={onChange}></Input> */}
                         <Select options={option}
                             onChange={onSelect}
-                            value={CategoryID} 
+                            value={CategoryID}
                         />
 
-                   
+
                     </FormGroup>
                     <FormGroup>
                         <Label>Product Image</Label>

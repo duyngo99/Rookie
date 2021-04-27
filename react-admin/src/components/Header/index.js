@@ -45,7 +45,7 @@ export default function Header(props) {
             <NavItem>
               <NavLink><Button onClick={btnUser} color="primary">User</Button></NavLink>
             </NavItem>
-           
+
           </Nav>
         </Collapse>
       </Navbar>

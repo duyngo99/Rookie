@@ -14,12 +14,11 @@ import AddCategory from './components/Category/Add'
 
 import UpdateCategory from './components/Category/Update'
 
-
-
 import Oidc, { UserManager } from 'oidc-client'
 import Login from './components/Login/Login'
 import LoginCallback from './components/Login/LoginCallback'
 import axios from 'axios';
+import User from './components/User/Index';
 
 require('dotenv').config()
 
@@ -50,6 +49,8 @@ function App() {
           <Route exact path="/category"><Category></Category></Route>
           <Route path="/category/add"><AddCategory></AddCategory></Route>
           <Route path="/category/update/:id"><UpdateCategory></UpdateCategory></Route>
+
+          <Route exact path ="/user"><User></User></Route>
 
           
           <Route exact path="/signin-oidc" component={LoginCallback}></Route>
