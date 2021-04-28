@@ -14,12 +14,12 @@ export default function User() {
 
 
     return (
-        <div>
+        <div div className="row">
             <div className="col-md-2"></div>
             <div className="col-md-8" >
-                <Table>
+                <Table className="table table-hover ">
                     <thead>
-                        <tr>
+                        <tr className="table-warning">
                             <th>UserID</th>
                             <th>UserName</th>
                             <th>Password</th>

@@ -9,7 +9,6 @@ function Add() {
         e.preventDefault()
         const formData = new FormData()
         formData.append("Name", addCategory.Name)
-        console.log(process.env.REACT_APP_LOCAL_CATEGORY)
         axios.post(process.env.REACT_APP_LOCAL_CATEGORY, formData).then(window.location.href = "/category")
         // axios.post(process.env.REACT_LOCAL_CATEGORY, formData).then(history.push('/category'))
     }

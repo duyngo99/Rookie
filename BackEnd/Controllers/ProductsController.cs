@@ -28,7 +28,7 @@ namespace BackEnd.Controllers
             _hostEnvironment = hostEnvironment;
             _configuration = configuration;
         }
-        [NonAction]
+        [AllowAnonymous]
         public async Task<string> SaveImage(IFormFile imageFile)
         {
             string imageName = new String(Path.GetFileNameWithoutExtension(imageFile.FileName).Take(10).ToArray()).Replace(' ', '-');
@@ -106,6 +106,7 @@ namespace BackEnd.Controllers
             return StatusCode(201);
         }
         [HttpPut("{id}")]
+          [AllowAnonymous]
         public async Task<ActionResult> UpdateProduct(int id, [FromForm] ProductFormVm model)
         {
             if (model.ImageFile != null)
@@ -128,6 +129,7 @@ namespace BackEnd.Controllers
             return NotFound();
         }
         [HttpDelete("{id}")]
+          [AllowAnonymous]
         public async Task<ActionResult> DeleteProduct(int id)
         {
             var product = await _dataContext.Products.FirstOrDefaultAsync(x => x.ProductID == id);

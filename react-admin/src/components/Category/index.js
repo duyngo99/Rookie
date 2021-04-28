@@ -4,7 +4,11 @@ import axios from 'axios'
 import { Table, Button } from 'reactstrap'
 
 
+
 function Index() {
+    var accessToken = localStorage.getItem("access_token")
+    console.log(accessToken)
+
     const [categoryList, setCategoryList] = useState([])
     const history = useHistory()
     const btnCreate = () => {
@@ -12,7 +16,7 @@ function Index() {
     }
 
     const btnDelete = (id) => {
-        axios.delete(process.env.REACT_APP_LOCAL_CATEGORY + `/` + id).then(setCategoryList(categoryList.filter(x => x.categoryID != id)))
+        axios.delete("https://localhost:5001/api/categories/" + id).then(setCategoryList(categoryList.filter(x => x.categoryID != id)))
     }
 
     const btnUpdate = (id) => {
@@ -23,12 +27,13 @@ function Index() {
         axios.get(process.env.REACT_APP_LOCAL_CATEGORY).then(response => {
             setCategoryList(response.data)
         })
-    },[])
+    }, [])
 
     return (
-        <div style={{display:"flex", flexDirection:"row", flexWrap:"wrap", justifyContent:'center'}}> 
-        <div className="col-md-1"></div>
-        <div  className="col-md-10" >
+        <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: 'center' }}>
+            <div className="col-md-1" />
+
+            <div className="col-md-10" >
                 <Table >
                     <thead>
                         <tr>
@@ -49,9 +54,9 @@ function Index() {
                     </tbody>
                 </Table>
                 <Button color="danger" onClick={btnCreate} >Create Category</Button>
-                
-        </div>
-        <div className="col-md-1"></div>
+
+            </div>
+            <div className="col-md-1"></div>
         </div>
     );
 }

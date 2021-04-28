@@ -6,7 +6,11 @@ export default function LoginCallBack() {
         <div>
             {
                  userManager.signinCallback().then( res=>{
-                    userManager.getUser().then(user=>user.profile.role==="Admin"?window.location.href="http://localhost:3000/product":window.location.href="https://localhost:3001")
+                    // 
+                    userManager.getUser().then(user=>{
+                        localStorage.setItem("access_token",user.access_token)
+                        user.profile.role==="Admin"?window.location.href="/category":window.location.href="https://localhost:3001"
+                    })
                 })         
             }
         </div>

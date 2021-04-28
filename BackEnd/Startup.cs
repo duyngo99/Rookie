@@ -64,7 +64,7 @@ namespace BackEnd
                 {
                     option.ExpectedScope = "rookieshop.api";
                 });
-
+            
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("Bearer", policy =>

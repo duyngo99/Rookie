@@ -32,18 +32,18 @@ export default function Header(props) {
   return (
     <div>
       <Navbar color="light" light expand="md" style={{ display: "flex", flexDirection: "column", flexWrap: "wrap" }}>
-        <NavbarBrand >React admin side</NavbarBrand>
+        <NavbarBrand style={{color:"black"}} >React admin side</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem >
-              <NavLink ><Button onClick={btnProduct} color="primary">Product</Button></NavLink>
+              <NavLink ><Button onClick={btnProduct} color="info">Product</Button></NavLink>
             </NavItem>
             <NavItem>
-              <NavLink><Button onClick={btnCategory} color="primary">Category</Button></NavLink>
+              <NavLink><Button onClick={btnCategory} color="info">Category</Button></NavLink>
             </NavItem>
             <NavItem>
-              <NavLink><Button onClick={btnUser} color="primary">User</Button></NavLink>
+              <NavLink><Button onClick={btnUser} color="info">User</Button></NavLink>
             </NavItem>
 
           </Nav>
