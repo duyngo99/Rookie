@@ -28,11 +28,15 @@ export default function Header(props) {
     history.push('/user/')
   }
 
+  const btnLogout = () => {
+    history.push('logout/')
+  }
+
 
   return (
     <div>
       <Navbar color="light" light expand="md" style={{ display: "flex", flexDirection: "column", flexWrap: "wrap" }}>
-        <NavbarBrand style={{color:"black"}} >React admin side</NavbarBrand>
+        <NavbarBrand style={{ color: "black" }} >React admin side</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
@@ -44,6 +48,9 @@ export default function Header(props) {
             </NavItem>
             <NavItem>
               <NavLink><Button onClick={btnUser} color="info">User</Button></NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink><Button onClick={btnLogout} color="info">Log out</Button></NavLink>
             </NavItem>
 
           </Nav>

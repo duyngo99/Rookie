@@ -16,8 +16,13 @@ import UpdateCategory from './components/Category/Update'
 
 
 import Oidc, { UserManager } from 'oidc-client'
+
 import Login from './components/Login/Login'
 import LoginCallback from './components/Login/LoginCallback'
+
+import Logout from './components/Logout/Logout'
+import LogoutCallBack from './components/Logout/LogoutCallBack'
+
 import axios from 'axios';
 import User from './components/User/Index';
 
@@ -43,13 +48,12 @@ function App() {
   })
   var user = localStorage.getItem("User")
   console.log(user)
-  if(user!="Admin")
-  {
-    return(
+  if (user != "Admin") {
+    return (
       <BrowserRouter>
         <Switch>
-            <Route exact path="/"><Login userManager={userManager}></Login></Route>
-            <Route exact path="/signin-oidc" component={LoginCallback}></Route>
+          <Route exact path="/"><Login userManager={userManager}></Login></Route>
+          <Route exact path="/signin-oidc" component={LoginCallback}></Route>
         </Switch>
       </BrowserRouter>
     );
@@ -70,7 +74,8 @@ function App() {
 
           <Route exact path="/user"><User></User></Route>
           <Route exact path="/signin-oidc" component={LoginCallback}></Route>
-          <Route exact path="/signout-"></Route>
+          <Route exact path="/logout" ><Logout userManager={userManager}></Logout></Route>
+          <Route exact path="/signout-oidc" component={LogoutCallBack}></Route>
         </Switch>
       </BrowserRouter>
     </div>

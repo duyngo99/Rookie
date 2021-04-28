@@ -59,7 +59,7 @@ namespace API.IdentityServer
                     ClientId = "react_admin",
                     AllowedGrantTypes = GrantTypes.Implicit,
                     RedirectUris = { $"{clientUrls["ReactAdmin"]}/signin-oidc" },
-                    // PostLogoutRedirectUris = { "http://localhost:3000/signout-oidc" },
+                    PostLogoutRedirectUris = { $"{clientUrls["ReactAdmin"]}/signout-oidc" },
                     AllowedCorsOrigins={ $"{clientUrls["ReactAdmin"]}"},
                     AllowedScopes = new List<string>
                     {
