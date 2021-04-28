@@ -29,6 +29,7 @@ namespace BackEnd.Controllers
             _configuration = configuration;
         }
         [AllowAnonymous]
+        [NonAction]
         public async Task<string> SaveImage(IFormFile imageFile)
         {
             string imageName = new String(Path.GetFileNameWithoutExtension(imageFile.FileName).Take(10).ToArray()).Replace(' ', '-');
@@ -106,7 +107,7 @@ namespace BackEnd.Controllers
             return StatusCode(201);
         }
         [HttpPut("{id}")]
-          [AllowAnonymous]
+        [Authorize("Admin")]
         public async Task<ActionResult> UpdateProduct(int id, [FromForm] ProductFormVm model)
         {
             if (model.ImageFile != null)
@@ -124,12 +125,39 @@ namespace BackEnd.Controllers
             product.CategoryID = model.CategoryID;
             product.RatingAverage = model.RatingAVG;
             product.ProductImage = model.Image;
+            
+
+            await _dataContext.SaveChangesAsync();
+            return NotFound();
+        }
+        [HttpPut]
+        [Route("rating/{id}")]
+        [AllowAnonymous]
+        
+        public async Task<ActionResult> UpdateRatingProduct(int id,ProductFormVm model)
+        {
+            if (model.ImageFile != null)
+            {
+                model.Image = await SaveImage(model.ImageFile);
+            }
+            var product = await _dataContext.Products.FirstOrDefaultAsync(x => x.ProductID == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            product.ProductName = model.Name;
+            product.Description = model.Description;
+            product.Price = model.Price;
+            product.CategoryID = model.CategoryID;
+            product.RatingAverage = model.RatingAVG;
+            product.ProductImage = model.Image;
+            
 
             await _dataContext.SaveChangesAsync();
             return NotFound();
         }
         [HttpDelete("{id}")]
-          [AllowAnonymous]
+        [AllowAnonymous]
         public async Task<ActionResult> DeleteProduct(int id)
         {
             var product = await _dataContext.Products.FirstOrDefaultAsync(x => x.ProductID == id);

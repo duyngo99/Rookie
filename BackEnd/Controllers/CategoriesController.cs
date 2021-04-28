@@ -59,7 +59,7 @@ namespace BackEnd.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize("Admin")]
 
         public async Task<ActionResult> CreateCategory([FromForm] CategoryFormVm model)
         {
@@ -72,7 +72,7 @@ namespace BackEnd.Controllers
             return Ok(category.CategoryName);
         }
         [HttpPut("{id}")]
-        [AllowAnonymous]
+        [Authorize("Admin")]
         public async Task<ActionResult> UpdateCategory(int id, [FromForm] CategoryFormVm model)
         {
             var category = await _dataContext.Categories.FirstOrDefaultAsync(x => x.CategoryID == id);
@@ -85,7 +85,7 @@ namespace BackEnd.Controllers
             return Accepted();
         }
         [HttpDelete("{id}")]
-        [AllowAnonymous]
+        [Authorize("Admin")]
         public async Task<ActionResult> DeleteCategory(int id)
         {
             var category = await _dataContext.Categories.FirstOrDefaultAsync(x => x.CategoryID == id);

@@ -23,18 +23,25 @@ namespace BackEnd
 {
     public class Startup
     {
-          readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
         public static Dictionary<string, string> clientUrls;
+
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            clientUrls = new Dictionary<string, string>
+            {
+                ["CustomerSite"] = Configuration["ClientUrl:CustomerSite"],
+                ["BackEnd"] = Configuration["ClientUrl:Backend"],
+                ["ReactAdmin"] = Configuration["ClientUrl:ReactAdmin"]
+            };
+
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")));
 
@@ -43,7 +50,7 @@ namespace BackEnd
             services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            
+
             services.AddIdentityServer(options =>
             {
                 options.Events.RaiseErrorEvents = true;
@@ -54,17 +61,17 @@ namespace BackEnd
             })
                .AddInMemoryIdentityResources(IdentityServerConfig.IdentityResources)
                .AddInMemoryApiScopes(IdentityServerConfig.ApiScopes)
-               .AddInMemoryClients(IdentityServerConfig.Clients)
+               .AddInMemoryClients(IdentityServerConfig.Clients(clientUrls))
                .AddAspNetIdentity<User>()
                .AddProfileService<CustomProfileService>()
                .AddDeveloperSigningCredential();
-            
+
             services.AddAuthentication()
                 .AddLocalApi("Bearer", option =>
                 {
                     option.ExpectedScope = "rookieshop.api";
                 });
-            
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("Bearer", policy =>
@@ -72,10 +79,17 @@ namespace BackEnd
                     policy.AddAuthenticationSchemes("Bearer");
                     policy.RequireAuthenticatedUser();
                 });
+                options.AddPolicy("Admin", policy =>
+                {
+                    policy.AddAuthenticationSchemes("Bearer");
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireRole("Admin");
+                });
             });
-            
-            services.AddMvc(options=>{
-                var policy=new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+
+            services.AddMvc(options =>
+            {
+                var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
             }).AddXmlSerializerFormatters();
 
@@ -110,17 +124,17 @@ namespace BackEnd
                     }
                 });
             });
-            
+
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-          // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-           
-          
-              if (env.IsDevelopment())
+
+
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -130,7 +144,7 @@ namespace BackEnd
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseCors(options=>options.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+            app.UseCors(options => options.WithOrigins(Configuration["ReactAdmin"]).AllowAnyMethod().AllowAnyHeader().AllowCredentials());
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -153,7 +167,7 @@ namespace BackEnd
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                    endpoints.MapRazorPages();
+                endpoints.MapRazorPages();
             });
         }
     }

@@ -21,7 +21,7 @@ namespace API.IdentityServer
                   new ApiScope("rookieshop.api", "Rookie API")
              };
 
-        public static IEnumerable<Client> Clients =>
+        public static IEnumerable<Client> Clients(Dictionary<string, string> clientUrls) =>
             new List<Client>
             {
                 // machine to machine client
@@ -43,9 +43,9 @@ namespace API.IdentityServer
 
                     AllowedGrantTypes = GrantTypes.Code,
 
-                    RedirectUris = { "https://localhost:3001/signin-oidc" },
+                    RedirectUris = { $"{clientUrls["CustomerSite"]}/signin-oidc" },
 
-                    PostLogoutRedirectUris = { "https://localhost:3001/signout-callback-oidc" },
+                    PostLogoutRedirectUris = {  $"{clientUrls["CustomerSite"]}/signout-callback-oidc" },
 
                     AllowedScopes = new List<string>
                     {
@@ -56,11 +56,11 @@ namespace API.IdentityServer
                 },
                 new Client
                 {
-                    ClientId = "react_admin",                  
+                    ClientId = "react_admin",
                     AllowedGrantTypes = GrantTypes.Implicit,
-                    RedirectUris = { "http://localhost:3000/signin-oidc" },
+                    RedirectUris = { $"{clientUrls["ReactAdmin"]}/signin-oidc" },
                     // PostLogoutRedirectUris = { "http://localhost:3000/signout-oidc" },
-                    AllowedCorsOrigins={"http://localhost:3000"},
+                    AllowedCorsOrigins={ $"{clientUrls["ReactAdmin"]}"},
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
@@ -80,9 +80,9 @@ namespace API.IdentityServer
                     RequireConsent = false,
                     RequirePkce = true,
 
-                    RedirectUris =           { $"https://localhost:5001/swagger/oauth2-redirect.html" },
-                    PostLogoutRedirectUris = { $"https://localhost:5001/swagger/oauth2-redirect.html" },
-                    AllowedCorsOrigins =     { $"https://localhost:5001" },
+                    RedirectUris =           { $"{clientUrls["BackEnd"]}/swagger/oauth2-redirect.html" },
+                    PostLogoutRedirectUris = { $"{clientUrls["BackEnd"]}/swagger/oauth2-redirect.html" },
+                    AllowedCorsOrigins =     { $"{clientUrls["BackEnd"]}" },
 
                     AllowedScopes = new List<string>
                     {

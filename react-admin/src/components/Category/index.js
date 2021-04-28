@@ -6,9 +6,7 @@ import { Table, Button } from 'reactstrap'
 
 
 function Index() {
-    var accessToken = localStorage.getItem("access_token")
-    console.log(accessToken)
-
+    
     const [categoryList, setCategoryList] = useState([])
     const history = useHistory()
     const btnCreate = () => {
@@ -47,7 +45,6 @@ function Index() {
                                     <td>{category.name}</td>
                                     <Button onClick={() => btnDelete(category.categoryID)} color="danger">Delete</Button>
                                     <Button onClick={() => btnUpdate(category.categoryID)} color="success">Update</Button>
-
                                 </tr>
                             )
                         }

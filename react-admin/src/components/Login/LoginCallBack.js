@@ -8,8 +8,7 @@ export default function LoginCallBack() {
                  userManager.signinCallback().then( res=>{
                     // 
                     userManager.getUser().then(user=>{
-                        localStorage.setItem("access_token",user.access_token)
-                        user.profile.role==="Admin"?window.location.href="/category":window.location.href="https://localhost:3001"
+                        user.profile.role==="Admin"?window.location.href="/":window.location.href="/product"
                     })
                 })         
             }

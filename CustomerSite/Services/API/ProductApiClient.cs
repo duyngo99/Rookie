@@ -82,11 +82,12 @@ namespace CustomerSite.Services.API
                 Name = product.ProductName,
                 Price = product.Price,
                 Image = product.Image,
+                ImageFile=null,
                 Description = product.Description,
                 RatingAVG = avr,
                 CategoryID = product.CategoryID
             };
-            await client.PutAsync(_configuration["local:BackEndUrl"] + "api/products/" + ProId, new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json"));
+            await client.PutAsync(_configuration["local:BackEndUrl"] + "api/products/rating/" + ProId, new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json"));
 
         }
 
