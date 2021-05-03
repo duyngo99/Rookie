@@ -29,7 +29,7 @@ export default function Header(props) {
   }
 
   const btnLogout = () => {
-    history.push('logout/')
+    history.push('/logout/')
   }
 
 
@@ -41,16 +41,16 @@ export default function Header(props) {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem >
-              <NavLink ><Button onClick={btnProduct} color="info">Product</Button></NavLink>
+              <NavLink ><Button onClick={btnProduct} color="primary">Product</Button></NavLink>
             </NavItem>
             <NavItem>
-              <NavLink><Button onClick={btnCategory} color="info">Category</Button></NavLink>
+              <NavLink><Button onClick={btnCategory} color="primary">Category</Button></NavLink>
             </NavItem>
             <NavItem>
-              <NavLink><Button onClick={btnUser} color="info">User</Button></NavLink>
+              <NavLink><Button onClick={btnUser} color="primary">User</Button></NavLink>
             </NavItem>
             <NavItem>
-              <NavLink><Button onClick={btnLogout} color="info">Log out</Button></NavLink>
+              <NavLink><Button onClick={btnLogout} color="primary">Log out</Button></NavLink>
             </NavItem>
 
           </Nav>

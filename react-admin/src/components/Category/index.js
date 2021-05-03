@@ -6,7 +6,7 @@ import { Table, Button } from 'reactstrap'
 
 
 function Index() {
-    
+
     const [categoryList, setCategoryList] = useState([])
     const history = useHistory()
     const btnCreate = () => {
@@ -32,9 +32,9 @@ function Index() {
             <div className="col-md-1" />
 
             <div className="col-md-10" >
-                <Table >
+                <Table bordered className="table table-hover">
                     <thead>
-                        <tr>
+                        <tr className="table-warning">
                             <th>CategoryName</th>
                         </tr>
                     </thead>
@@ -43,8 +43,8 @@ function Index() {
                             categoryList.map(category =>
                                 <tr>
                                     <td>{category.name}</td>
-                                    <Button onClick={() => btnDelete(category.categoryID)} color="danger">Delete</Button>
-                                    <Button onClick={() => btnUpdate(category.categoryID)} color="success">Update</Button>
+                                    <td><Button onClick={() => btnDelete(category.categoryID)} color="danger">Delete</Button></td>
+                                    <td><Button onClick={() => btnUpdate(category.categoryID)} color="success">Update</Button></td>
                                 </tr>
                             )
                         }

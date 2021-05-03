@@ -82,14 +82,11 @@ function Add() {
                         <Input name="Price" type="text" placeholder="Enter Price " onChange={onChange}></Input>
                     </FormGroup>
                     <FormGroup>
-                        {/* <Label>Product Category</Label>
-                        <Input name="CategoryID" type="" placeholder="Enter CategoryID " onChange={onChange}></Input> */}
+                        <Label>Category</Label>
                         <Select options={option}
                             onChange={onSelect}
                             value={CategoryID}
                         />
-
-
                     </FormGroup>
                     <FormGroup>
                         <Label>Product Image</Label>
@@ -104,7 +101,6 @@ function Add() {
             </div>
             <div className="col-md-1"></div>
         </div>
-
     )
 }
 

@@ -15,9 +15,9 @@ export default function User() {
 
     return (
         <div div className="row">
-            <div className="col-md-2"></div>
-            <div className="col-md-8" >
-                <Table className="table table-hover ">
+            <div className="col-md-1"></div>
+            <div className="col-md-10" >
+                <Table bordered className="table table-hover ">
                     <thead>
                         <tr className="table-warning">
                             <th>UserID</th>
@@ -40,7 +40,7 @@ export default function User() {
                 <Link to={"/"}><Button className="btn btn-danger">Cancel</Button></Link>
 
             </div>
-            <div className="col-md-2"></div>
+            <div className="col-md-1"></div>
         </div>
     )
 }

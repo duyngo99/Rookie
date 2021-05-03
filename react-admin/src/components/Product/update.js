@@ -1,17 +1,32 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FormGroup, Label, Input, Button, } from 'reactstrap'
 import { Link, useHistory, useParams } from 'react-router-dom';
 import axios from 'axios'
+import Select from 'react-select'
+
 function Update() {
     const imgDefault = '/img/noImage.jpg'
     const history = useHistory()
     const [updateProduct, setUpdateProduct] = useState({
         Name: '', Price: 0, Description: '', CategoryID: 0, RatingAVG: 0, Image: '', ImageFile: null, ImageSrc: ''
     })
+
+    const [categoryList, setCategoryList] = useState([])
+    useEffect(() => {
+        axios.get(process.env.REACT_APP_LOCAL_CATEGORY).then(response => {
+            setCategoryList(response.data)
+        })
+    }, [])
+
+    var option = []
+    categoryList.map(x => option.push({ value: x.categoryID, label: x.name }))
+
     let { id } = useParams()
+
     const update = (e) => {
         e.preventDefault()
         const formData = new FormData()
+        updateProduct.CategoryID = updateProduct.CategoryID.value
         formData.append('Name', updateProduct.Name)
         formData.append('Price', parseFloat(updateProduct.Price))
         formData.append('Description', updateProduct.Description)
@@ -25,6 +40,9 @@ function Update() {
     const onChange = e => {
         const { name, value } = e.target
         setUpdateProduct({ ...updateProduct, [name]: value })
+    }
+    const onSelect = CategoryID => {
+        setUpdateProduct({ ...updateProduct, CategoryID })
     }
 
     const showPreview = e => {
@@ -48,9 +66,9 @@ function Update() {
             })
         }
     }
+    const { CategoryID } = updateProduct
 
     return (
-
         <div className="row">
             <div className="col-md-3"></div>
             <div className="col-md-6">
@@ -68,8 +86,11 @@ function Update() {
                         <Input name="Price" type="text" placeholder="Enter Price " onChange={onChange}></Input>
                     </FormGroup>
                     <FormGroup>
-                        <Label>Product Category</Label>
-                        <Input name="CategoryID" type="text" placeholder="Enter CategoryID " onChange={onChange}></Input>
+                        <Label>Category</Label>
+                        <Select options={option}
+                            onChange={onSelect}
+                            value={CategoryID}
+                        />
                     </FormGroup>
                     <FormGroup>
                         <Label>Product Image</Label>
@@ -84,7 +105,6 @@ function Update() {
             </div>
             <div className="col-md-3"></div>
         </div>
-
     )
 }
 

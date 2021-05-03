@@ -11,7 +11,7 @@ function Index() {
         axios.get(process.env.REACT_APP_LOCAL_CATEGORY).then(response => {
             setCategoryList(response.data)
         })
-    },[])
+    }, [])
     const [productList, setProductList] = useState([])
     const history = useHistory()
     const btnCreate = () => {
@@ -32,36 +32,37 @@ function Index() {
             setProductList(response.data)
         }
         )
-    },[])
-    
+    }, [])
+
     return (
         <div className="row">
-            <div className="col-md-2"></div>
-            <div className="col-md-8" >
-                <Table>
+            <div className="col-md-1"></div>
+            <div className="col-md-10" >
+                <Table bordered className="table table-hover">
                     <thead>
-                        <tr>
+                        <tr className="table-warning">
                             <th>ProductID</th>
                             <th>ProductName</th>
                             <th>Price</th>
                             <th>Description</th>
                             <th>Category</th>
                             <th>Image</th>
-                            <th>Function</th>
+                            <th>Delete</th>
+                            <th>Update</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
                             productList.map(product =>
                                 <tr>
-                                    <td>{product.productID}</td>    
+                                    <td>{product.productID}</td>
                                     <td>{product.productName}</td>
-                                    <td>{product.price}</td>    
+                                    <td>{product.price}</td>
                                     <td>{product.description}</td>
-                                    <td>{categoryList.find(x=>x.categoryID==product.categoryID) != undefined?categoryList.find(x=>x.categoryID==product.categoryID).name:''}</td>
+                                    <td>{categoryList.find(x => x.categoryID == product.categoryID) != undefined ? categoryList.find(x => x.categoryID == product.categoryID).name : ''}</td>
                                     <td><img src={process.env.REACT_APP_LOCAL_IMAGE + product.image} width="100px"></img></td>
-                                    <Button onClick={() => btnDelete(product.productID)} color="danger">Delete</Button>
-                                    <Button onClick={() => btnUpdate(product.productID)} color="success">Update</Button>                               
+                                    <td><Button onClick={() => btnDelete(product.productID)} color="danger">Delete</Button></td>
+                                    <td><Button onClick={() => btnUpdate(product.productID)} color="success">Update</Button> </td>
                                 </tr>
                             )
                         }
@@ -70,7 +71,7 @@ function Index() {
                 <Button color="danger" onClick={btnCreate}>Create Product</Button>
 
             </div>
-            <div className="col-md-2"></div>
+            <div className="col-md-1"></div>
         </div>
     );
 }
