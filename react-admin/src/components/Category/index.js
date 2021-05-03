@@ -14,7 +14,7 @@ function Index() {
     }
 
     const btnDelete = (id) => {
-        axios.delete(process.env.REACT_APP_LOCAL_CATEGORY + id).then(setCategoryList(categoryList.filter(x => x.categoryID != id)))
+        axios.delete(process.env.REACT_APP_LOCAL_CATEGORY + '/' + id).then(setCategoryList(categoryList.filter(x => x.categoryID != id)))
     }
 
     const btnUpdate = (id) => {
