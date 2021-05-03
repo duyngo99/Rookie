@@ -80,13 +80,8 @@
           <div class="menu_side">
             <div id="navbar_menu">
               <ul class="first-ul" >
-                <li> <a class="active" href="it_home.html">Home</a>
-                  <ul>
-                    <li><a href="it_home.html">It Home Page</a></li>
-                    <li><a href="it_home_dark.html">It Dark Home Page</a></li>
-                  </ul>
+                <li> <a class="active" asp-action="Index" asp-controller="Home">Home</a>
                 </li>
-                <li><a href="it_about.html">About Us</a></li>
                 <li> <a href="#">Category</a>
                 <ul>
                   @await Component.InvokeAsync("CategoryMenu")
