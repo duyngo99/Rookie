@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackEnd.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210426103503_NewRookie")]
-    partial class NewRookie
+    [Migration("20210503014011_Create")]
+    partial class Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,8 +49,8 @@ namespace BackEnd.Migrations
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Total")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
@@ -113,29 +113,6 @@ namespace BackEnd.Migrations
                     b.HasIndex("ProductID");
 
                     b.ToTable("Rating");
-                });
-
-            modelBuilder.Entity("BackEnd.Models.ShoppingCartItem", b =>
-                {
-                    b.Property<int>("ShoppingCartItemID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProductID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ShoppingCartID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ShoppingCartItemID");
-
-                    b.HasIndex("ProductID");
-
-                    b.ToTable("ShoppingCartItems");
                 });
 
             modelBuilder.Entity("BackEnd.Models.User", b =>
@@ -359,15 +336,6 @@ namespace BackEnd.Migrations
                         .HasForeignKey("ProductID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("BackEnd.Models.ShoppingCartItem", b =>
-                {
-                    b.HasOne("BackEnd.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductID");
 
                     b.Navigation("Product");
                 });

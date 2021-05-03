@@ -68,6 +68,7 @@ namespace CustomerSite
             services.AddTransient<IProductApiClient, ProductApiClient>();
             services.AddTransient<ICategoryApiClient, CategoryApiClient>();
             services.AddTransient<IRatingApiClient, RatingApiClient>();
+            services.AddTransient<IOrderApiClient, OrderApiClient>();
             services.AddDistributedMemoryCache();
 
 
