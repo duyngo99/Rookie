@@ -31,7 +31,7 @@
                       <td class>
                         <div class="media"><a class="thumbnail pull-left" asp-action="Detail" asp-controller="Home"
                         asp-route-id='@item.Product.ProductID'> <img
-                          src="https://localhost:5001/image/@item.Product.Image" width="300px"></a>
+                          src='@Configuration["imageBackEnd"]/@item.Product.Image' width="300px"></a>
                           <div class="media-body">
                             <h4 class="media-heading"><a asp-action="Detail" asp-controller="Home"
                             asp-route-id='@item.Product.ProductID'>@item.Product.ProductName</a></h4>
