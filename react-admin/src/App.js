@@ -32,10 +32,10 @@ require('dotenv').config()
 function App() {
   const config = {
     userStore: new Oidc.WebStorageStateStore({ store: window.localStorage }),
-    authority: "https://localhost:5001/",
+    authority: `${process.env.REACT_APP_LOCAL_API}`,
     client_id: "react_admin",
-    redirect_uri: "http://localhost:3000/signin-oidc",
-    // post_logout_redirect_uri: `${process.env.REACT_APP_ADMIN}/signout-oidc`,
+    redirect_uri: `${process.env.REACT_APP_HOME}/signin-oidc`,
+    post_logout_redirect_uri: `${process.env.REACT_APP_HOME}/signout-oidc`,
     response_type: "id_token token",
     scope: "openid profile rookieshop.api",
   }

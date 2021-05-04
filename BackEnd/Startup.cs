@@ -37,9 +37,9 @@ namespace BackEnd
         {
             clientUrls = new Dictionary<string, string>
             {
-                ["CustomerSite"] = Configuration["ClientUrl:CustomerSite"],
-                ["BackEnd"] = Configuration["ClientUrl:Backend"],
-                ["ReactAdmin"] = Configuration["ClientUrl:ReactAdmin"]
+                ["CustomerSite"] = Configuration["clientUrl:CustomerSite"],
+                ["BackEnd"] = Configuration["clientUrl:Backend"],
+                ["ReactAdmin"] = Configuration["clientUrl:ReactAdmin"]
             };
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
@@ -134,17 +134,17 @@ namespace BackEnd
         {
 
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
-            app.UseCors(options => options.WithOrigins(Configuration["ReactAdmin"]).AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+            // if (env.IsDevelopment())
+            // {
+            //     app.UseDeveloperExceptionPage();
+            // }
+            // else
+            // {
+            //     app.UseExceptionHandler("/Home/Error");
+            //     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+            //     app.UseHsts();
+            // }
+            app.UseCors(options => options.WithOrigins(Configuration["clientUrl:ReactAdmin"]).AllowAnyMethod().AllowAnyHeader().AllowCredentials());
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

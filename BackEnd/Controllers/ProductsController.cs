@@ -125,7 +125,7 @@ namespace BackEnd.Controllers
             product.CategoryID = model.CategoryID;
             product.RatingAverage = model.RatingAVG;
             product.ProductImage = model.Image;
-            
+
 
             await _dataContext.SaveChangesAsync();
             return NotFound();
@@ -133,8 +133,8 @@ namespace BackEnd.Controllers
         [HttpPut]
         [Route("rating/{id}")]
         [AllowAnonymous]
-        
-        public async Task<ActionResult> UpdateRatingProduct(int id,ProductFormVm model)
+
+        public async Task<ActionResult> UpdateRatingProduct(int id, ProductFormVm model)
         {
             if (model.ImageFile != null)
             {
@@ -151,7 +151,7 @@ namespace BackEnd.Controllers
             product.CategoryID = model.CategoryID;
             product.RatingAverage = model.RatingAVG;
             product.ProductImage = model.Image;
-            
+
 
             await _dataContext.SaveChangesAsync();
             return NotFound();
